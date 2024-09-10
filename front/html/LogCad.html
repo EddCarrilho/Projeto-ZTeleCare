@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Tela Login cadastro da Z TeleCare</title>
+    <link rel="stylesheet" href="/front/css/style.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css"
+        integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+</head>
+<body>
+    <!-- Container para os conteúdos -->
+    <div class="container">
+        <!-- Conteúdo da tela de cadastro -->
+        <div class="content first-content">
+            <div class="first-column">
+                <!-- Caminho para tela de login -->
+                <h2 class="title title-primary">Bem vindo de volta!</h2>
+                <p class="description description-primary">Para continuar conosco</p>
+                <p class="description description-primary">Por favor logue com suas informações</p>
+                <button id="signin" class="btn btn-primary">Login</button>
+            </div>    
+            <!-- Tela de cadastro -->
+            <div class="second-column">
+                <h2 class="title title-second">Crie uma conta</h2>
+                <p class="description description-second">Coloque as informações abaixo</p>
+               <!-- Formulário e informações para cadastro -->
+                <form class="form">
+                    <label class="label-input" for="">
+                        <i class="fa-solid fa-user"></i>
+                        <input type="text" placeholder="Nome" id="nome" required>
+                    </label>
+                    
+                    <label class="label-input" for="">
+                        <i class="fa-regular fa-user"></i>
+                        <input type="text" placeholder="Sobrenome" id="sobrenome" required>
+                    </label>
+
+                    <label class="label-input" for="">
+                        <i class="fa-solid fa-paperclip"></i>
+                        <input type="number" placeholder="CPF" id="cpf" required>
+                    </label>
+
+                    <label class="label-input" for="">
+                        <i class="fa-regular fa-calendar-days"></i>
+                        <input type="date" placeholder="Data de nascimento" id="data" required>
+                    </label>
+
+                    <label class="label-input" for="">
+                        <i class="fa-sharp fa-solid fa-phone"></i>
+                        <input type="number" placeholder="Telefone" id="phone" required>
+                    </label>
+
+
+                    <label class="label-input" for="">
+                        <i class="far fa-envelope icon-modify"></i>
+                        <input type="email" placeholder="Email" id="email" required>
+                    </label>
+                    
+                    <label class="label-input" for="">
+                        <i class="fa-solid fa-lock"></i>
+                        <input type="password" placeholder="Senha" id="senha" required>
+                    </label>
+                    
+                    <!-- Botão de cadastro -->
+                    <button class="btn btn-second" onclick="Cadastrar()">Cadastrar</button>        
+                    <!-- Caminho para tela de cadastro -->
+                </form>
+            </div><!-- second column fim -->
+        </div><!-- first content fim -->
+        <div class="content second-content">
+            <div class="first-column">
+                <h2 class="title title-primary">Olá Paciente!</h2>
+                <p class="description description-primary">Coloque suas informações abaixo</p>
+                <p class="description description-primary">e tenha a experiência completa</p>
+                <button id="signup" class="btn btn-primary">Cadastro</button>
+            </div>
+            <!-- Tela de login e informações para o login -->
+            <div class="second-column">
+                <h2 class="title title-second">Logue agora !</h2>
+                <p class="description description-second">Com suas informações abaixo:</p>
+                <form class="form">
+                
+                    <label class="label-input" for="">
+                        <i class="far fa-envelope icon-modify"></i>
+                        <input type="email" placeholder="Email">
+                    </label>
+
+                    <label class="label-input" for="">
+                        <i class="fa-solid fa-paperclip"></i>
+                        <input type="number" placeholder="CPF">
+                    </label>
+                
+                    <label class="label-input" for="">
+                        <i class="fa-solid fa-lock"></i>
+                        <input type="password" placeholder="Password">
+                    </label>
+                
+                    <!-- Caminho para mudança de senha e botão de logib-->
+                    <a class="password" href="#">Esqueceu a senha ?</a>
+                    <button class="btn btn-second">Login</button>
+                </form>
+            </div><!-- second column fim -->
+        </div><!-- second-content fim-->
+    </div>
+    <script src="/front/js/LogCad.js"></script>
+    <script src="/front/js/script.js"></script>
+</body>
+</html>

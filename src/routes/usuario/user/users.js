@@ -19,30 +19,17 @@ router.get("/listar",(req,res)=>{
 router.post("/cadastrar",(req,res)=>{
     let sh = req.body.senha;
 
-    console.log(process.env.SALT);
-
-
     bcrypt.hash(sh,round,(error,crypt)=>{
         if(error){
             return res.status(500).send({msg:"Erro ao tentar cadastrar"})
         }
         req.body.senha = crypt;
-        data.query("insert into usuario set ?",req.body,(error,result)=>{
+        data.query("INSERT INTO dbprojeto.usuario set ?",req.body,(error,result)=>{
             if(error){
                 return res.status(500).send({msg:"Erro ao tentar cadastrar"})
             }
             res.status(201).send({msg:"Ok",payload:result})
         });
-
-    });
-});
-
-router.put("/alterarfoto/:id",(req,res)=>{
-    data.query("update usuario set ? where idusuario=?",[req.body,req.params.id],(error,result)=>{
-        if(error){
-            return res.status(500).send({msg:"Erro ao tentar atualizar a foto"})
-        }
-        res.status(200).send({msg:"Ok",payload:result})
     });
 });
 
@@ -56,6 +43,7 @@ router.put("/alterarsenha/:id",(req,res)=>{
         if(error){
             return res.status(500).send({msg:"Erro ao tentar atualizar a senha"})
         }
+        
         req.body.senha = crypt;
         data.query("update usuario set ? where idusuario=?",[req.body,req.params.id],(error,result)=>{
             if(error){
@@ -65,10 +53,6 @@ router.put("/alterarsenha/:id",(req,res)=>{
         });
 
     });
-});
-
-router.get("/buscarporid/:id",(req,res)=>{
-
 });
 
 router.get("/buscarporusuario/:usuario",(req,res)=>{
