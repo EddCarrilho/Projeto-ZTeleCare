@@ -6,8 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Tela Login cadastro da Z TeleCare</title>
     <link rel="stylesheet" href="/front/css/style.css">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css"
-        integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
     <!-- Container para os conteúdos -->
@@ -29,38 +28,34 @@
                 <form class="form">
                     <label class="label-input" for="">
                         <i class="fa-solid fa-user"></i>
-                        <input type="text" placeholder="Nome" id="nome" required>
-                    </label>
-                    
-                    <label class="label-input" for="">
-                        <i class="fa-regular fa-user"></i>
-                        <input type="text" placeholder="Sobrenome" id="sobrenome" required>
+                        <input type="text" required placeholder="Nome completo" id="nome">
                     </label>
 
                     <label class="label-input" for="">
                         <i class="fa-solid fa-paperclip"></i>
-                        <input type="number" placeholder="CPF" id="cpf" required>
+                        <input type="number" required placeholder="CPF" id="cpf">
+                        
                     </label>
 
                     <label class="label-input" for="">
                         <i class="fa-regular fa-calendar-days"></i>
-                        <input type="date" placeholder="Data de nascimento" id="data" required>
+                        <input type="date" required placeholder="Data de nascimento" id="data">
                     </label>
 
                     <label class="label-input" for="">
                         <i class="fa-sharp fa-solid fa-phone"></i>
-                        <input type="number" placeholder="Telefone" id="phone" required>
+                        <input type="number" required placeholder="Telefone" id="phone">
                     </label>
 
 
                     <label class="label-input" for="">
-                        <i class="far fa-envelope icon-modify"></i>
-                        <input type="email" placeholder="Email" id="email" required>
+                        <i class="fa-regular fa-envelope"></i>
+                        <input type="email" required placeholder="Email" id="email">
                     </label>
                     
                     <label class="label-input" for="">
                         <i class="fa-solid fa-lock"></i>
-                        <input type="password" placeholder="Senha" id="senha" required>
+                        <input type="password" required placeholder="Senha" id="senha">
                     </label>
                     
                     <!-- Botão de cadastro -->
@@ -70,7 +65,7 @@
             </div><!-- second column fim -->
         </div><!-- first content fim -->
         <div class="content second-content">
-            <div class="first-column">
+            <div class="first-column2">
                 <h2 class="title title-primary">Olá Paciente!</h2>
                 <p class="description description-primary">Coloque suas informações abaixo</p>
                 <p class="description description-primary">e tenha a experiência completa</p>
@@ -83,23 +78,23 @@
                 <form class="form">
                 
                     <label class="label-input" for="">
-                        <i class="far fa-envelope icon-modify"></i>
-                        <input type="email" placeholder="Email">
+                        <i class="fa-regular fa-envelope"></i>
+                        <input type="email" required placeholder="Email" id="email2">
                     </label>
 
                     <label class="label-input" for="">
                         <i class="fa-solid fa-paperclip"></i>
-                        <input type="number" placeholder="CPF">
+                        <input type="number" required placeholder="CPF" id="cpf2">
                     </label>
                 
                     <label class="label-input" for="">
                         <i class="fa-solid fa-lock"></i>
-                        <input type="password" placeholder="Password">
+                        <input type="password" required placeholder="Password" id="senha2">
                     </label>
                 
                     <!-- Caminho para mudança de senha e botão de logib-->
                     <a class="password" href="#">Esqueceu a senha ?</a>
-                    <button class="btn btn-second">Login</button>
+                    <button class="btn btn-second" onclick="Login()">Login</button>
                 </form>
             </div><!-- second column fim -->
         </div><!-- second-content fim-->

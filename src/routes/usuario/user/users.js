@@ -26,7 +26,7 @@ router.post("/cadastrar",(req,res)=>{
         req.body.senha = crypt;
         data.query("INSERT INTO dbprojeto.usuario set ?",req.body,(error,result)=>{
             if(error){
-                return res.status(500).send({msg:"Erro ao tentar cadastrar"})
+                return res.status(500).send({msg:"Erro ao tentar cadastrar", error})
             }
             res.status(201).send({msg:"Ok",payload:result})
         });
@@ -38,14 +38,13 @@ router.put("/alterarsenha/:id",(req,res)=>{
 
     console.log(process.env.SALT);
 
-
     bcrypt.hash(sh,round,(error,crypt)=>{
         if(error){
             return res.status(500).send({msg:"Erro ao tentar atualizar a senha"})
         }
         
         req.body.senha = crypt;
-        data.query("update usuario set ? where idusuario=?",[req.body,req.params.id],(error,result)=>{
+        data.query("update dbprojeto.usuario set ? where idusuario=?",[req.body,req.params.id],(error,result)=>{
             if(error){
                 return res.status(500).send({msg:"Erro ao tentar atualizar a senha"})
             }
@@ -56,7 +55,7 @@ router.put("/alterarsenha/:id",(req,res)=>{
 });
 
 router.get("/buscarporusuario/:usuario",(req,res)=>{
-    data.query("select * from usuario where nomeusuario=?", req.params.usuario, (error,dados)=>{
+    data.query("select * from dbprojeto.usuario where nome=?", req.params.usuario, (error,dados)=>{
         if(error){
             return res.status(500).send({msg:"Erro ao selecionar os dados"})
         }
@@ -66,10 +65,10 @@ router.get("/buscarporusuario/:usuario",(req,res)=>{
 
 router.post("/login",(req,res)=>{
     let sh = req.body.senha;
-    data.query("select * from usuario where nomeusuario=?", req.body.nomeusuario,(error,result)=>{
+    data.query("select * from dbprojeto.usuario where email=? and cpf=?",[req.body.email,req.body.cpf],(error,result)=>{
         console.log(result)
         if(error || result[0]==null){
-            return res.status(400).send({msg:"Usuário ou senha incorreto"})
+            return res.status(400).send({msg:"Email, CPF ou senha incorretos"})
         }
 
         bcrypt.compare(sh,result[0].senha,(err, same)=>{
@@ -77,7 +76,7 @@ router.post("/login",(req,res)=>{
                 return res.status(500).send({msg:"Erro ao processar o login" + err})
             }
             else if(same==false){
-                return res.status(400).send({msg:"Usuário ou senha incorreto"})
+                return res.status(400).send({msg:"Email, CPF ou senha incorretos"})
             }
             else{
 
