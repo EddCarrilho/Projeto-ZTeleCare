@@ -65,7 +65,7 @@ router.get("/buscarporusuario/:usuario",(req,res)=>{
 
 router.post("/login",(req,res)=>{
     let sh = req.body.senha;
-    data.query("select * from dbprojeto.usuario where email=? and cpf=?",[req.body.email,req.body.cpf],(error,result)=>{
+    data.query("select * from dbprojeto.usuario where email=? and cpf=?",[req.body.email,req.body.cpf,],(error,result)=>{
         console.log(result)
         if(error || result[0]==null){
             return res.status(400).send({msg:"Email, CPF ou senha incorretos"})
