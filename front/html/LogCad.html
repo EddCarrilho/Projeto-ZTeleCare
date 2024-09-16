@@ -25,7 +25,7 @@
                 <h2 class="title title-second">Crie uma conta</h2>
                 <p class="description description-second">Coloque as informações abaixo</p>
                <!-- Formulário e informações para cadastro -->
-                <form class="form">
+                <form class="form" id="MyForm">
                     <label class="label-input" for="">
                         <i class="fa-solid fa-user"></i>
                         <input type="text" required placeholder="Nome completo" id="nome">
@@ -33,7 +33,7 @@
 
                     <label class="label-input" for="">
                         <i class="fa-solid fa-paperclip"></i>
-                        <input type="number" required placeholder="CPF" id="cpf">
+                        <input type="text" required placeholder="CPF" id="cpf" maxlength="14">
                         
                     </label>
 
@@ -56,6 +56,9 @@
                     <label class="label-input" for="">
                         <i class="fa-solid fa-lock"></i>
                         <input type="password" required placeholder="Senha" id="senha">
+                        <button type="button" id="togglePassword" style="cursor: pointer;">
+                            <i class="fa-solid fa-eye"></i> <!-- Ícone do olho -->
+                        </button>
                     </label>
                     
                     <!-- Botão de cadastro -->
@@ -75,7 +78,7 @@
             <div class="second-column">
                 <h2 class="title title-second">Logue agora !</h2>
                 <p class="description description-second">Com suas informações abaixo:</p>
-                <form class="form">
+                <form class="form" id="MyForm2">
                 
                     <label class="label-input" for="">
                         <i class="fa-regular fa-envelope"></i>
@@ -84,12 +87,15 @@
 
                     <label class="label-input" for="">
                         <i class="fa-solid fa-paperclip"></i>
-                        <input type="number" required placeholder="CPF" id="cpf2">
+                        <input type="text" required placeholder="CPF" id="cpf2" maxlength="14">
                     </label>
                 
                     <label class="label-input" for="">
                         <i class="fa-solid fa-lock"></i>
-                        <input type="password" required placeholder="Password" id="senha2">
+                        <input type="password" required placeholder="Senha" id="senha2">
+                        <button type="button" id="togglePassword2" style="cursor: pointer;">
+                            <i class="fa-solid fa-eye"></i> <!-- Ícone do olho -->
+                        </button>
                     </label>
                 
                     <!-- Caminho para mudança de senha e botão de logib-->
