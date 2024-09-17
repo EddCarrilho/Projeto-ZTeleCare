@@ -21,7 +21,7 @@ router.post("/cadastrar",(req,res)=>{
 
     bcrypt.hash(sh,round,(error,crypt)=>{
         if(error){
-            return res.status(500).send({msg:"Erro ao tentar cadastrar"})
+            return res.status(500).send({msg:"Erro ao tentar cadastrar", error})
         }
         req.body.senha = crypt;
         data.query("INSERT INTO dbprojeto.usuario set ?",req.body,(error,result)=>{

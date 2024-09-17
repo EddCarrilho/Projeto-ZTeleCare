@@ -1,43 +1,54 @@
 function Cadastrar(){
-    const nome = document.querySelector("#nome");
-    const cpf = document.querySelector("#cpf");
-    const data = document.querySelector("#data");
-    const phone = document.querySelector("#phone");
-    const email = document.querySelector("#email");
-    const senha = document.querySelector("#senha");
+    if (validateDate()) {
+        const nome = document.querySelector("#nome");
+        const cpf = document.querySelector("#cpf").value;
+        const data = document.querySelector("#data");
+        const phone = document.querySelector("#phone");
+        const email = document.querySelector("#email");
+        const senha = document.querySelector("#senha");
 
-    // Remove pontos e traços dos CPFs
-    const cleanCpf = getCleanCpf(cpf);
+        // Remove pontos e traços dos CPFs
+        const cleanCpf = getcleancpf(cpf);
+        function getcleancpf(cpf) {
+            // Remove todos os caracteres que não sejam dígitos (números) do CPF
+            return cpf.replace(/\D/g, '');
+        }
 
-    fetch("http://127.0.0.1:4100/api/v1/users/cadastrar",{
-        method:"POST",
-        headers:{
-            "accept":"application/json",
-            "content-type":"application/json"
-        },
-        body:JSON.stringify({
-            nome:nome.value,
-            cpf:cleanCpf.value,
-            datadenascimento:data.value,
-            telefone:phone.value,
-            email:email.value,
-            senha:senha.value
+        fetch("http://127.0.0.1:4100/api/v1/users/cadastrar",{
+            method:"POST",
+            headers:{
+                "accept":"application/json",
+                "content-type":"application/json"
+            },
+            body:JSON.stringify({
+                nome:nome.value,
+                cpf:cleanCpf,
+                datadenascimento:data.value,
+                telefone:phone.value,
+                email:email.value,
+                senha:senha.value
+            })
         })
-    })
-    .then((res)=>res.json())
-    .then((result)=>{
-        console.log(result);
-    })
-    .catch((error)=>console.error(`Erro na api ${error}`))
+        .then((res)=>res.json())
+        .then((result)=>{
+            console.log(result);
+        })
+        .catch((error)=>console.error(`Erro na api ${error}`)) 
+    }
 }
 
 function Login(){
 
     const email2 = document.querySelector("#email2");
-    const cpf2 = document.querySelector("#cpf2");
+    const cpf2 = document.querySelector("#cpf2").value;
     const senha2 = document.querySelector("#senha2");
 
-    const cleanCpf2 = getCleanCpf(cpf2);
+    // Remove pontos e traços dos CPFs
+    const cleanCpf2 = getcleancpf2(cpf2);
+    function getcleancpf2(cpf2) {
+        // Remove todos os caracteres que não sejam dígitos (números) do CPF
+        return cpf2.replace(/\D/g, '');
+    }
 
     fetch("http://127.0.0.1:4100/api/v1/users/login",{
         method:"POST",
@@ -47,7 +58,7 @@ function Login(){
         },
         body:JSON.stringify({
             email:email2.value,
-            cpf:cleanCpf2.value,
+            cpf:cleanCpf2,
             senha:senha2.value
         })
     }).then((res)=>res.json())
@@ -118,3 +129,36 @@ function applyCpfMask(event) {
 // Adicionar máscara aos campos de CPF
 document.getElementById('cpf').addEventListener('input', applyCpfMask);
 document.getElementById('cpf2').addEventListener('input', applyCpfMask);
+
+function setInputError(id) {
+    document.getElementById(id).classList.add('input-error');
+}
+
+function removeInputError(id) {
+    document.getElementById(id).classList.remove('input-error');
+}
+
+function validateDate() {
+    const input = document.getElementById('data');
+    const dateValue = input.value;
+    if (dateValue) {
+        const [year, month, day] = dateValue.split('-').map(Number);
+        if (isValidDate(day, month, year)) {
+            removeInputError('data');
+            return true;
+        } else {
+            setInputError('data');
+            return false;
+        }
+    } else {
+        return false;
+    }
+}
+
+function isValidDate(day, month, year) {
+    if (isNaN(day) || isNaN(month) || isNaN(year) || month < 1 || month > 12) {
+        return false;
+    }
+    const date = new Date(year, month - 1, day);
+    return date.getFullYear() === year && date.getMonth() === month - 1 && date.getDate() === day;
+}
