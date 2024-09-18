@@ -34,17 +34,18 @@
                     <label class="label-input" for="">
                         <i class="fa-solid fa-paperclip"></i>
                         <input type="text" required placeholder="CPF" id="cpf" maxlength="14">
-                        
                     </label>
+                    <div id="cpf-error" style="color: red; display: none;">Cpf inválido</div>
 
                     <label class="label-input" for="">
                         <i class="fa-regular fa-calendar-days"></i>
                         <input type="date" required placeholder="Data de nascimento" id="data">
                     </label>
+                    <div id="data-error" style="color: red; display: none;">Data inválida</div>
 
                     <label class="label-input" for="">
                         <i class="fa-sharp fa-solid fa-phone"></i>
-                        <input type="number" required placeholder="Telefone" id="phone">
+                        <input type="text" required placeholder="Telefone" id="phone" maxlength="11">
                     </label>
 
 
@@ -62,7 +63,7 @@
                     </label>
                     
                     <!-- Botão de cadastro -->
-                    <button class="btn btn-second" type="button" onclick="Cadastrar()">Cadastrar</button>        
+                    <button class="btn btn-second" type="submit" onclick="Cadastrar(event)">Cadastrar</button>        
                     <!-- Caminho para tela de cadastro -->
                 </form>
             </div><!-- second column fim -->

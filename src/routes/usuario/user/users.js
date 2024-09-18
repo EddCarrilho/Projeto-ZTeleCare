@@ -63,6 +63,33 @@ router.get("/buscarporusuario/:usuario",(req,res)=>{
     });
 });
 
+router.get("/buscarporcpf/:cpf",(req,res)=>{
+    data.query("select * from dbprojeto.usuario where cpf=?", req.params.cpf, (error,dados)=>{
+        if(error){
+            return res.status(500).send({msg:"Erro ao selecionar os dados"})
+        }
+        return res.status(200).send({msg:"OK",payload:dados})
+    });
+});
+
+router.get("/buscarporemail/:email",(req,res)=>{
+    data.query("select * from dbprojeto.usuario where email=?", req.params.email, (error,dados)=>{
+        if(error){
+            return res.status(500).send({msg:"Erro ao selecionar os dados"})
+        }
+        return res.status(200).send({msg:"OK",payload:dados})
+    });
+});
+
+router.get("/buscarportelefone/:telefone",(req,res)=>{
+    data.query("select * from dbprojeto.usuario where telefone=?", req.params.telefone, (error,dados)=>{
+        if(error){
+            return res.status(500).send({msg:"Erro ao selecionar os dados"})
+        }
+        return res.status(200).send({msg:"OK",payload:dados})
+    });
+});
+
 router.post("/login",(req,res)=>{
     let sh = req.body.senha;
     data.query("select * from dbprojeto.usuario where email=? and cpf=?",[req.body.email,req.body.cpf,],(error,result)=>{
