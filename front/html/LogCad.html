@@ -35,7 +35,7 @@
                         <i class="fa-solid fa-paperclip"></i>
                         <input type="text" required placeholder="CPF" id="cpf" maxlength="14">
                     </label>
-                    <div id="cpf-error" style="color: red; display: none;">Cpf inválido</div>
+                    <div id="cpf-error" style="color: red; display: none;">Cpf inválido ou indisponível</div>
 
                     <label class="label-input" for="">
                         <i class="fa-regular fa-calendar-days"></i>
@@ -45,15 +45,25 @@
 
                     <label class="label-input" for="">
                         <i class="fa-sharp fa-solid fa-phone"></i>
-                        <input type="text" required placeholder="Telefone" id="phone" maxlength="11">
+                        <div>
+                                <select id="country-code" class="country-code">
+                                    <option value="+1">+1 (EUA)</option>
+                                    <option value="+44">+44 (Reino Unido)</option>
+                                    <option value="+55">+55 (Brasil)</option>
+                                    <option value="+91">+91 (Índia)</option>
+                                    <!-- Adicione mais opções de países conforme necessário -->
+                                </select>
+                                <input type="text" required placeholder="Telefone" id="phone" maxlength="15" onkeypress="return apenasNumeros(event)">
+                        </div>
                     </label>
-
+                    <div id="phone-error" style="color: red; display: none;">Telefone inválido ou indisponível</div>
 
                     <label class="label-input" for="">
                         <i class="fa-regular fa-envelope"></i>
                         <input type="email" required placeholder="Email" id="email">
                     </label>
-                    
+                    <div id="email-error" style="color: red; display: none;">Email inválido ou indisponível</div>
+
                     <label class="label-input" for="">
                         <i class="fa-solid fa-lock"></i>
                         <input type="password" required placeholder="Senha" id="senha">
@@ -63,7 +73,7 @@
                     </label>
                     
                     <!-- Botão de cadastro -->
-                    <button class="btn btn-second" type="submit" onclick="Cadastrar(event)">Cadastrar</button>        
+                    <button class="btn btn-second" type="submit">Cadastrar</button>        
                     <!-- Caminho para tela de cadastro -->
                 </form>
             </div><!-- second column fim -->

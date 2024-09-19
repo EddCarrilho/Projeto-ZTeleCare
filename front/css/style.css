@@ -159,6 +159,20 @@ input:-webkit-autofill {
     -webkit-text-fill-color: #000 !important;
 }
 
+.country-code {
+    height: 40px;
+    border: none;
+    background-color: #ecf0f1;
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 5px 0 0 5px;
+}
+
+.country-code-span {
+    display: inline-block;
+    margin-right: 10px;
+}
+
 .label-input {
     background-color: #ecf0f1;
     display: flex;

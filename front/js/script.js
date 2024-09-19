@@ -1,43 +1,55 @@
 function Cadastrar(event){
-    if (validateDate(event) && funfou()) {
-        const nome = document.querySelector("#nome");
-        const cpf = document.querySelector("#cpf").value;
-        const data = document.querySelector("#data");
-        const phone = document.querySelector("#phone");
-        const email = document.querySelector("#email");
-        const senha = document.querySelector("#senha");
+    event.preventDefault()
+    const isDateValid = validateDate();
 
-        const cleanCpf = getcleancpf(cpf);
-        function getcleancpf(cpf) {
-            return cpf.replace(/\D/g, '');
-        }
-
-        fetch("http://127.0.0.1:4100/api/v1/users/cadastrar",{
-            method:"POST",
-            headers:{
-                "accept":"application/json",
-                "content-type":"application/json"
-            },
-            body:JSON.stringify({
-                nome:nome.value,
-                cpf:cleanCpf,
-                datadenascimento:data.value,
-                telefone:phone.value,
-                email:email.value,
-                senha:senha.value
-            })
-        })
-        .then((res)=>res.json())
-        .then((result)=>{
-            console.log({result});
-            //location.reload();
-        })
-        .catch((error)=>console.error(`Erro na api ${error}`))
-        event.preventDefault()
+    if (!isDateValid) {
+        return;  
     }
-    console.log('validateDate:', validateDate(event));
-    console.log('validateCpf:', validateCpf());
-    console.log('funfou:', funfou());
+
+    validateCpf().then((isCpfValid) => {
+        validateEmail().then((isEmailValid) => {
+            validatePhone().then((isPhoneValid) => {
+                if (isCpfValid && isEmailValid && isPhoneValid) {
+                    const nome = document.querySelector("#nome").value;
+                    const cpf = document.querySelector("#cpf").value;
+                    const data = document.querySelector("#data").value;
+                    const phone = document.querySelector("#phone").value;
+                    const countryCode = document.getElementById("country-code").value;
+                    const email = document.querySelector("#email").value;
+                    const senha = document.querySelector("#senha").value;
+                    
+                    const fullNumber = countryCode + phone;
+
+                    const cleanCpf = getcleancpf(cpf);
+                    function getcleancpf(cpf) {
+                        return cpf.replace(/\D/g, ''); 
+                    }
+        
+                    fetch("http://127.0.0.1:4100/api/v1/users/cadastrar", {
+                        method: "POST",
+                        headers: {
+                            "accept": "application/json",
+                            "content-type": "application/json"
+                        },
+                        body: JSON.stringify({
+                            nome: nome,
+                            cpf: cleanCpf,
+                            datadenascimento: data,
+                            telefone: fullNumber,
+                            email: email,
+                            senha: senha
+                        })
+                    })
+                    .then((res) => res.json())
+                    .then((result) => {
+                        console.log({ result });
+                        location.reload(); 
+                    })
+                    .catch((error) => console.error(`Erro na API: ${error}`));
+                }
+            });
+        });
+    });
 }
 
 function Login(){
@@ -139,7 +151,7 @@ function removeInputError(id) {
     document.getElementById(id).classList.remove('input-error');
 }
 
-function validateDate(event) {
+function validateDate() {
     const input = document.getElementById('data');
     const errorMessage = document.getElementById('data-error');
     const dateValue = input.value;
@@ -152,13 +164,11 @@ function validateDate(event) {
         } else {
             setInputError('data');
             errorMessage.style.display = 'block';
-            event.preventDefault()
             return false;
         }
     } else {
         return false;
     }
-    
 }
 
 function isValidDate(day, month, year) {
@@ -173,7 +183,7 @@ function isValidDate(day, month, year) {
     return date.getFullYear() === year && date.getMonth() === month - 1 && date.getDate() === day;
 }
 
-function validateCpf(event) {
+function validateCpf() {
 
     const cpf = document.querySelector("#cpf").value;
     const errorMessage = document.getElementById('cpf-error');
@@ -183,35 +193,72 @@ function validateCpf(event) {
             return cpf.replace(/\D/g, '');
         }
 
-    fetch(`http://127.0.0.1:4100/api/v1/users/buscarporcpf/${cleanCpf}`)
+    return fetch(`http://127.0.0.1:4100/api/v1/users/buscarporcpf/${cleanCpf}`)
         .then((res)=>res.json())
         .then((dados)=>{
-            // Verifica se os dados retornados da API são válidos
-            if (dados && dados.payload) {
+            if (dados.payload && dados.payload.length > 0 || cpf.length < 14) {
                 setInputError('cpf');
                 errorMessage.style.display = 'block';
-                event.preventDefault()
-                naofunfou()
+                return false;
             } else {
                 removeInputError('cpf');
                 errorMessage.style.display = 'none';
-                funfou()
+                return true;
             }
         })
         .catch((error)=> {
             console.error(`Erro na api ${error}`)
-            naofunfou()
+            return false;
         })
 }
 
-function naofunfou() {
-    console.log("So vendo")
-    return false;  // Dado foi encontrado
+function validatePhone() {
+    const phone = document.querySelector("#phone").value;
+    const countryCode = document.getElementById("country-code").value;
+    const errorMessage = document.getElementById('phone-error');
+    const fullNumber = countryCode + phone;
+
+    return fetch(`http://127.0.0.1:4100/api/v1/users/buscarportelefone/${fullNumber}`)
+        .then((res)=>res.json())
+        .then((dados)=>{
+            if (dados.payload && dados.payload.length > 0 && phone >= 10) {
+                setInputError('phone');
+                errorMessage.style.display = 'block';
+                return false;
+            } else {
+                removeInputError('phone');
+                errorMessage.style.display = 'none';
+                return true;
+            }
+        })
+        .catch((error)=> {
+            console.error(`Erro na api ${error}`)
+            return false;
+        })
 }
 
-function funfou() {
-    console.log("So vendo2")
-    return true;  // Dado não encontrado
+function validateEmail() {
+
+    const email = document.querySelector("#email").value;
+    const errorMessage = document.getElementById('email-error');
+
+    return fetch(`http://127.0.0.1:4100/api/v1/users/buscarporemail/${email}`)
+        .then((res)=>res.json())
+        .then((dados)=>{
+            if (dados.payload && dados.payload.length > 0) {
+                setInputError('email');
+                errorMessage.style.display = 'block';
+                return false;
+            } else {
+                removeInputError('email');
+                errorMessage.style.display = 'none';
+                return true;
+            }
+        })
+        .catch((error)=> {
+            console.error(`Erro na api ${error}`)
+            return false;
+        })
 }
 
 function setInputError(inputId) {
@@ -237,7 +284,14 @@ document.addEventListener('DOMContentLoaded', function() {
             event.preventDefault();
             return false;
         } else {
-            errorMessage.style.display = 'none';
+            Cadastrar(event);
         }
     });
 });
+
+function apenasNumeros(event) {
+    const char = String.fromCharCode(event.which);
+    if (!/^[0-9]$/.test(char)) {
+        event.preventDefault();
+    }
+}
