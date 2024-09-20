@@ -52,8 +52,8 @@ function Cadastrar(event){
     });
 }
 
-function Login(){
-
+function Login(event){
+    event.preventDefault();
     const email2 = document.querySelector("#email2");
     const cpf2 = document.querySelector("#cpf2").value;
     const senha2 = document.querySelector("#senha2");
@@ -76,7 +76,9 @@ function Login(){
         })
     }).then((res)=>res.json())
     .then((result)=>{
-        console.log(result);
+        console.log({result})
+        console.log("logado");
+        event.preventDefault();
     })
     .catch((error)=>console.error(`Erro ao tenta acessar a api ${error}`));
 }
@@ -119,10 +121,16 @@ signinButton.addEventListener('click', function () {
 signupButton.addEventListener('click', function () {
     const errorMessage = document.getElementById('data-error');
     const errorMessage2 = document.getElementById('cpf-error');
+    const errorMessage3 = document.getElementById('email-error');
+    const errorMessage4 = document.getElementById('phone-error');
     removeInputError('data');
     removeInputError('cpf');
+    removeInputError('email');
+    removeInputError('phone');
     errorMessage.style.display = 'none';
     errorMessage2.style.display = 'none';
+    errorMessage3.style.display = 'none';
+    errorMessage4.style.display = 'none';
     form2.reset();
 });
 
@@ -285,6 +293,22 @@ document.addEventListener('DOMContentLoaded', function() {
             return false;
         } else {
             Cadastrar(event);
+        }
+    });
+});
+
+document.addEventListener('DOMContentLoaded', function() {
+    document.getElementById('MyForm2').addEventListener('submit', function(event) {
+        const emailInput = document.getElementById('email2');
+        const cpfInput = document.getElementById('cpf2');
+        const senhaInput = document.getElementById('senha2');
+    
+        // Verifica se o campo está vazio
+        if (emailInput.value.trim() === '' ||cpfInput.value.trim() === '' ||senhaInput.value.trim() === '') {
+            event.preventDefault();
+            return false;
+        } else {
+            Login(event);
         }
     });
 });
