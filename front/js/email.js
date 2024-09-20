@@ -8,7 +8,7 @@ document.getElementById('contactForm').addEventListener('submit', function(event
     var mensagem = document.getElementById('message').value;
 
     // Montar o corpo do email
-    var emailBody = `Nome completo: ${nome}%0AEmail: ${email}%0ATelefone: ${telefone}%0AMensagem: ${mensagem}`;
+    var emailBody = `Nome completo: ${nome} %0AEmail: ${email} %0ATelefone: ${telefone} %0A%0A%0AMensagem: ${mensagem} %0A%0A%0A`;
 
     // Criar a URL mailto com os dados
     var mailtoLink = `mailto:ztelecare@gmail.com?subject=Contato do site&body=${emailBody}`;
