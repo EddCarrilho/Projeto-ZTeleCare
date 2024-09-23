@@ -4,14 +4,9 @@ const routerPersonal = express.Router()
 const data = require('../../../database/config.js')
 const verificar = require("../../../middleware/verify_token.js")
 
-routerPersonal.get("/listar",verificar,(req, res) => {
-    data.query("select * from dbprojeto.usuario", (error, result) => {
-        if (error) {
-            return res.status(500).send({ msg: "Erro ao selecionar os dados" })
-        }
-        res.status(200).send({ msg: "Ok", payload: result })
+routerPersonal.get("/verify",verificar,(req, res) => {
+        res.status(200).send({ msg: "Ok", payload: req.user})
     })
-})
 
 routerPersonal.get("/listar/:idusuario",verificar,(req, res) => {
     data.query("select * from dbprojeto.usuario where idusuario=?", req.params.idusuario, (error, result) => {

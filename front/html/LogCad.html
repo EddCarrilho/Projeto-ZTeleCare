@@ -4,11 +4,39 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Tela Login cadastro da Z TeleCare</title>
+    <title>Login Z TeleCare</title>
     <link rel="stylesheet" href="/front/css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <link rel="icon" href="../img/Logo.png">
 </head>
 <body>
+
+
+       <!-- Começo da header  -->
+
+       <header>
+
+        <!-- Logo  -->
+        <a href="./home.html" class="logo"><img src="../img/Logo.png" alt=""></a>
+
+        <!-- Link da navbar  -->
+        <nav class="navbar">
+            <ul>
+                <li><a href="../home.html">Home</a></li>
+                <li><a href="./LogCad.html">Login</a></li>
+                <li><a href="./recursos.html">Recursos</a></li>
+                <li><a href="./artigos.html">Artigos</a></li>
+                <li><a href="./sobre.html">Sobre</a></li>
+                <li><a href="./devs.html">Devs</a></li>
+            </ul>
+        </nav>
+
+
+        <div class="fas fa-bars"></div>
+    </header>
+    <!-- Fim da header  -->
+
     <!-- Container para os conteúdos -->
     <div class="container">
         <!-- Conteúdo da tela de cadastro -->
@@ -46,14 +74,14 @@
                     <label class="label-input" for="">
                         <i class="fa-sharp fa-solid fa-phone"></i>
                         <div>
-                                <select id="country-code" class="country-code">
-                                    <option value="+1">+1 (EUA)</option>
-                                    <option value="+44">+44 (Reino Unido)</option>
-                                    <option value="+55">+55 (Brasil)</option>
-                                    <option value="+91">+91 (Índia)</option>
-                                    <!-- Adicione mais opções de países conforme necessário -->
-                                </select>
-                                <input type="text" required placeholder="Telefone" id="phone" maxlength="15" onkeypress="return apenasNumeros(event)">
+                            <select id="country-code" class="country-code">
+                                <option value="+1">+1 (EUA)</option>
+                                <option value="+44">+44 (Reino Unido)</option>
+                                <option value="+55">+55 (Brasil)</option>
+                                <option value="+91">+91 (Índia)</option>
+                                <!-- Adicione mais opções de países conforme necessário -->
+                            </select>
+                            <input type="text" id="phone" placeholder="Seu número de telefone" required maxlength="15" onkeypress="return apenasNumeros(event)">
                         </div>
                     </label>
                     <div id="phone-error" style="color: red; display: none;">Telefone inválido ou indisponível</div>
@@ -98,26 +126,65 @@
 
                     <label class="label-input" for="">
                         <i class="fa-solid fa-paperclip"></i>
-                        <input type="text" required placeholder="CPF" id="cpf2" maxlength="14">
+                        <input type="text" required placeholder="CPF" id="cpf2">
                     </label>
                 
                     <label class="label-input" for="">
                         <i class="fa-solid fa-lock"></i>
-                        <input type="password" required placeholder="Senha" id="senha2">
+                        <input type="password" required placeholder="Password" id="senha2">
                         <button type="button" id="togglePassword2" style="cursor: pointer;">
                             <i class="fa-solid fa-eye"></i> <!-- Ícone do olho -->
                         </button>
                     </label>
                     <div id="login-error" style="color: red; display: none;">Email, CPF ou Senha incorretos.</div>
-                
+
                     <!-- Caminho para mudança de senha e botão de logib-->
                     <a class="password" href="#">Esqueceu a senha ?</a>
                     <button class="btn btn-second" type="submit">Login</button>
-                </form>
+                </form> 
             </div><!-- second column fim -->
         </div><!-- second-content fim-->
     </div>
-    <script src="/front/js/LogCad.js"></script>
-    <script src="/front/js/script.js"></script>
+
+<!-- Começo do footer -->
+
+ <section class="footer">
+
+    <div class="box">
+        <h2 class="logo"><span>Z</span>Tele <span>C</span>are</h2>
+
+        <p>O Z TeleCare é um site que facilita o acesso à saúde mental. Através dele, você pode agendar consultas
+            online
+            com psicólogos e psiquiatras, sem sair de casa. A plataforma oferece atendimento personalizado e seguro,
+            com
+            profissionais qualificados e um sistema fácil de usar.</p>
+    </div>
+
+    <div class="box">
+        <h2 class="logo"><span>Re</span>des <span>Soc</span>iais</h2>
+
+        <a href="https://github.com/16JoaoVso" target="_blank">Github</a>
+        <a href="https://br.linkedin.com/in/jo%C3%A3o-victor-santos-de-oliveira-808284273?trk=people-guest_people_search-card" target="_blank">Linkedin</a>
+        <a href="https://www.instagram.com/jotave.s0?igsh=MXV6MDJla3BsMm1icw==" target="_blank">instagram</a>
+    </div>
+
+
+
+    <h1 class="copyright">© Site para <span>Um Projeto</span> Integrador</h1>
+</section>
+
+
+
+<!-- Fim do footer  -->
+
+<!-- jquery link  -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+<!-- Link do js  -->
+<script src="../js/menu.js"></script>
+<script src="../js/LogCad.js"></script>
+<script src="../js/script.js"></script>
+
 </body>
+
 </html>

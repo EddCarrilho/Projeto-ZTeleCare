@@ -4,7 +4,7 @@ const jwt = require('jsonwebtoken')
 const verificar = (req, res, next) => {
     // Const para guardar o token recebido pelo usuário
     // do cabeçalho de requisição
-    const token_enviado = req.headers.token
+    const token_enviado = req.headers['authorization']?.split(' ')[1];
     if (!token_enviado) {
         return res.status(401).send({ msg: "Não autenticado. Efetue o login." })
     }

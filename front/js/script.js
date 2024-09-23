@@ -90,10 +90,10 @@ function Login(event){
                 }
             }).then((result)=>{
                 if (result) {
-                    console.log({result})
-                    console.log("logado");
+                    const token = result.token;
+                    localStorage.setItem('authToken', token);
+                    window.parent.postMessage(localStorage.getItem('authToken'), 'http://127.0.0.1:5510');
                     window.location.href = 'http://127.0.0.1:5510/front/home.html';
-                    event.preventDefault();
                 }
             })
             .catch((error)=>console.error(`Erro ao tenta acessar a api ${error}`));
@@ -352,12 +352,13 @@ document.addEventListener('DOMContentLoaded', function() {
         const phoneInput = document.getElementById('phone');
         const emailInput = document.getElementById('email');
         const senhaInput = document.getElementById('senha');
-    
+
         // Verifica se o campo está vazio
-        if (nameInput.value.trim() === '' || cpfInput.value.trim() === '' ||phoneInput.value.trim() === '' ||emailInput.value.trim() === '' ||senhaInput.value.trim() === '') {
+        if (nameInput.value.trim() === '' || cpfInput.value.trim() === '' || phoneInput.value.trim() === '' || emailInput.value.trim() === '' || senhaInput.value.trim() === '') {
             event.preventDefault();
             return false;
         } else {
+            event.preventDefault();
             Cadastrar(event);
         }
     });

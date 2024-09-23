@@ -514,7 +514,7 @@
     /* Imagens da home */
     .home .row .images img {
       width: 100%;
-      height: 60vh;
+      height: 50vh;
     }
 
     /* Sobre mobile  */
@@ -550,3 +550,5 @@
       padding: 0;
     }
   }
+
+  
