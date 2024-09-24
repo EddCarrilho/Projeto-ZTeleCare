@@ -1,5 +1,8 @@
   /* google font   */
-  @import url('https://fonts.googleapis.com/css2?family=Reddit+Sans+Condensed:wght@200..900&display=swap');
+  /* @import url('https://fonts.googleapis.com/css2?family=Reddit+Sans+Condensed:wght@200..900&display=swap'); */
+  @import url('https://fonts.googleapis.com/css2?family=Cantarell:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+  /* FONTE PARA O MENU ( font-family: "Nunito", sans-serif; ) */
+  @import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap');
 
   /* root */
   :root {
@@ -11,11 +14,10 @@
 
   /* CSS  */
   * {
-    font-family: "Reddit Sans Condensed", sans-serif;
+    font-family: "Cantarell", sans-serif;
     margin: 0;
     padding: 0;
     text-decoration: none;
-    text-transform: capitalize;
     outline: none;
     box-sizing: border-box;
     transition: all linear .2s;
@@ -67,10 +69,18 @@
   }
 
 
+  #linha {
+    margin: 25px 0 25px 0;
+    width: 100%;
+    border-bottom: 1px solid var(--azulC);
+  }
+
 
   /* Começo da header  */
 
   header {
+    font-family: "Nunito", sans-serif;
+    font-weight: 500;
     width: 96%;
     background: var(--branco);
     position: fixed;
@@ -164,6 +174,7 @@
   /* Imagens da home  */
   .home .row .images img {
     height: 75vh;
+    border-radius: 25px;
   }
 
   /*   */
@@ -234,6 +245,8 @@
     font-size: 1.5rem;
     color: var(--azulC);
     padding: 1rem 0;
+    line-height: 1.3em;
+    font-size: 1.8rem;
     text-align: start;
   }
 
@@ -316,8 +329,10 @@
   }
 
   .contact .row .images img {
-    width: 50vw;
-    height: 70vh;
+    width: 490px;
+    border-radius: 15px;
+    height: 100%;
+    margin: 0 50px;
   }
 
   .contact .row .form-container {
@@ -515,6 +530,7 @@
     .home .row .images img {
       width: 100%;
       height: 50vh;
+      border-radius: 20px;
     }
 
     /* Sobre mobile  */
@@ -550,5 +566,3 @@
       padding: 0;
     }
   }
-
-  

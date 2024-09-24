@@ -111,7 +111,6 @@ router.post("/login",(req,res)=>{
 
 
                 res.status(200).send({msg:"Autenticado", token:token})
-                console.log(token)
             }
         })
     });

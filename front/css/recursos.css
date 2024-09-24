@@ -1,0 +1,373 @@
+/* google font */
+/* @import url('https://fonts.googleapis.com/css2?family=Cantarell:ital,wght@0,400;0,700;1,400;1,700&display=swap'); */
+/* @import url('https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@100;300;400;500;700;800;900&display=swap'); */
+/* FONTE PARA AS DEMAIS  PÁGINAS ( font-family: "Barlow Condensed", sans-serif; )*/
+@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+/* FONTE PARA O MENU ( font-family: "Nunito", sans-serif; ) */
+@import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap');
+
+/* root */
+:root {
+  --azul: #0d4354;
+  --azulC: #0188df;
+  --branco: #fff;
+  --preto: #000000;
+}
+
+
+* {
+  font-family: "Barlow Condensed", sans-serif;
+  margin: 0;
+  padding: 0;
+  text-decoration: none;
+  outline: none;
+  box-sizing: border-box;
+  transition: all linear .2s;
+
+}
+
+html,
+body {
+  font-size: 62.5%;
+  overflow-x: hidden;
+}
+
+header {
+  font-family: "Nunito", sans-serif;
+  font-weight: 500;
+  width: 96%;
+  background: var(--branco);
+  position: fixed;
+  top: 2rem;
+  left: 50%;
+  transform: translate(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 2rem;
+  z-index: 1000;
+}
+
+/* Logo  */
+
+
+header .logo img {
+  width: 80px;
+  margin: 2px 0px 0px 25px;
+}
+
+header .logo span {
+  color: var(--azulC);
+}
+
+/* navbar */
+header .navbar ul {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  list-style: none;
+}
+
+header .navbar ul li {
+  margin: 0 1rem;
+}
+
+header .navbar ul li a {
+  text-decoration: none;
+  font-size: 2rem;
+  color: var(--azul);
+}
+
+header .navbar ul li a:hover {
+  color: var(--azulC);
+}
+
+header .fa-bars {
+  font-size: 3rem;
+  color: var(--azul);
+  cursor: pointer;
+  display: none;
+}
+
+header .fa-times {
+  transform: rotate(180deg);
+}
+
+
+.header-active {
+  top: 0;
+  width: 100%;
+  box-shadow: .1rem .3rem rgba(0, 0, 0, .3);
+}
+
+.titulo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  background: #fafafa;
+  padding-top: 150px;
+  z-index: 1;
+}
+
+.titulo h1 {
+  font-size: 3em;
+  margin: 25px 0;
+  text-align: center;
+  font-weight: 800;
+  color: var(--azulC);
+}
+
+.titulo p {
+  font-weight: 300;
+  font-size: 2.5em;
+}
+
+.content {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  width: 1000px;
+  margin-top: 30px;
+}
+
+.card {
+  min-height: 220px;
+  width: calc(50% - 10px);
+  padding: 30px;
+  border-radius: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  background: #fff;
+  margin: 10px 4px;
+  box-shadow: 0px 15px 25px rgba(0, 0, 0, .2);
+  transition: 1.3s;
+}
+
+.card i {
+  margin: 20px;
+  color: var(--azul);
+}
+
+.card h2 {
+  margin-bottom: 12px;
+  font-weight: 700;
+  font-size: 3em;
+  text-align: center;
+}
+
+.card p {
+  color: var(--preto);
+  text-align: center;
+}
+
+.card:hover i,
+.card:hover p {
+  color: #fff;
+}
+
+.card:hover h2 {
+  font-weight: 500;
+  color: var(--azulC);
+}
+
+.card:nth-child(1):hover {
+  background: linear-gradient(45deg,
+      rgba(13, 60, 84, 0.7) 0%,
+      rgba(13, 67, 84, 1) 100%),
+    url('../images/celular.png');
+  background-size: cover;
+
+}
+
+
+.card:nth-child(2):hover {
+  background: linear-gradient(45deg,
+      rgba(13, 60, 84, 0.7) 0%,
+      rgba(13, 67, 84, 1) 100%),
+    url('../images/chat.png');
+  background-size: cover;
+
+}
+
+.card:nth-child(3):hover {
+  background: linear-gradient(45deg,
+      rgba(13, 60, 84, 0.7) 0%,
+      rgba(13, 67, 84, 1) 100%),
+    url('../images/medico.jpeg');
+  background-size: cover;
+
+}
+
+.card:nth-child(4):hover {
+  background: linear-gradient(45deg,
+      rgba(13, 60, 84, 0.7) 0%,
+      rgba(13, 67, 84, 1) 100%),
+    url('../images/duvida.jpg');
+  background-size: cover;
+
+}
+
+.footer {
+  background: var(--azulC);
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  padding: 2rem 0;
+  width: 100%;
+  bottom: 0;
+  left: 0;
+  position: relative;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+.footer .box {
+  width: 30rem;
+  margin: 2rem;
+  text-align: center;
+}
+
+.footer .box:nth-child(1) {
+  text-align: left;
+}
+
+/* logo no footer  */
+
+.footer .box .logo {
+  padding: 2rem 0;
+  font-size: 3rem;
+  color: var(--branco);
+}
+
+.footer .box .logo:hover {
+  color: var(--azul);
+}
+
+.footer .box .logo span {
+  color: var(--azul);
+}
+
+.footer .box p {
+  font-size: 1.5rem;
+  color: var(--branco);
+}
+
+.footer .box a {
+  color: var(--branco);
+  font-size: 2rem;
+  display: block;
+  padding: .2rem 0;
+}
+
+.footer .box a:hover {
+  text-decoration: underline;
+}
+
+
+.footer .copyright {
+  width: 85%;
+  padding-top: 1rem;
+  font-size: 2rem;
+  color: var(--branco);
+  text-align: center;
+  border-top: .2rem solid var(--branco);
+}
+
+.footer .credit span {
+  color: var(--azul);
+  text-decoration: underline;
+  letter-spacing: .5rem;
+}
+
+
+
+
+@media (max-width:768px) {
+
+  html {
+    font-size: 55%;
+  }
+
+  header {
+    width: 96%;
+    background: var(--branco);
+    position: fixed;
+    top: 2rem;
+    left: 50%;
+    transform: translate(-50%);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 2rem;
+    padding-bottom: 10px;
+    z-index: 1000;
+  }
+
+  header .fa-bars {
+    display: block;
+  }
+
+  header .logo img {
+    width: 55px;
+    margin: -15px 0px 0px 25px;
+  }
+
+  header .navbar {
+    position: fixed;
+    top: -100rem;
+    left: 0;
+    width: 100%;
+    background: var(--branco);
+    opacity: 0;
+  }
+
+  header .navbar ul {
+    flex-flow: column;
+    padding: 2rem 0;
+  }
+
+  header .navbar ul li {
+    margin: 1rem 0;
+    width: 100%;
+    text-align: center;
+  }
+
+  header .navbar ul li a {
+    font-size: 3rem;
+    display: block;
+  }
+
+  header .nav-toggle {
+    top: 5.5rem;
+    opacity: 1;
+  }
+
+  .footer {
+    width: 100vw;
+    margin: 0;
+    top: 10px;
+    padding: 2rem;
+  }
+
+  .titulo {
+    padding-top: 150px;
+  }
+
+  .titulo h1 {
+    font-size: 2.5em;
+    font-weight: 600;
+  }
+
+  .content {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .card {
+    min-width: 300px;
+    margin: 10px auto;
+  }
+}

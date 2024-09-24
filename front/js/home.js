@@ -20,8 +20,7 @@ $(document).ready(function () {
 document.addEventListener("DOMContentLoaded", function() {
     window.addEventListener('message', function(event) {
         if (event.origin === 'http://127.0.0.1:5510/front/html/LogCad.html') {
-            const token = event.data; // Aqui está o token enviado pelo iframe
-            console.log('Token recebido:', token);
+            const token = event.data;
         }
     });
     Verify();
@@ -37,6 +36,7 @@ function Verify(){
             'Authorization': `Bearer ${token}`
             }
         }).then((res)=> {
+            console.log(res.status);
             if (res.status === 200){
                 return res.json();
             } else {
@@ -45,12 +45,12 @@ function Verify(){
         }).then((result)=>{
             if (result && result.msg === "Ok") {
                 document.querySelector('li a[href="/front/html/LogCad.html"]').parentElement.style.display = 'none';
-                //localStorage.removeItem('authToken');
+                localStorage.removeItem('authToken');
+                console.log("teste")
             } 
         })
         .catch((error)=>console.error(`Erro ao tenta acessar a api ${error}`));
     } else {
-        console.log('Nenhum token encontrado.');
         alert("Não logado")
         document.querySelector('li a[href="/front/html/LogCad.html"]').parentElement.style.display = 'block';
     }
@@ -74,4 +74,11 @@ document.getElementById('contactForm').addEventListener('submit', function(event
     // Abrir a URL para enviar o email
     window.location.href = mailtoLink;
 });
+
+function apenasNumeros(event) {
+    const char = String.fromCharCode(event.which);
+    if (!/^[0-9]$/.test(char)) {
+        event.preventDefault();
+    }
+}
 

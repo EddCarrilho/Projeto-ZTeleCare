@@ -42,8 +42,11 @@ function Cadastrar(event){
                     })
                     .then((res) => res.json())
                     .then((result) => {
-                        console.log({ result });
-                        location.reload(); 
+                        const Sucesso = document.getElementById('card');
+                        Sucesso.style.display = 'inline-flex';
+                        localStorage.setItem('cardVisible', 'true');
+                        console.log({result});
+                        location.reload();
                     })
                     .catch((error) => console.error(`Erro na API: ${error}`));
                 }
@@ -51,6 +54,21 @@ function Cadastrar(event){
         });
     });
 }
+
+window.onload = function() {
+    const Sucesso = document.getElementById('card');
+    
+    const cardVisible = localStorage.getItem('cardVisible');
+    
+    if (cardVisible === 'true') {
+        Sucesso.style.display = 'inline-flex';
+        localStorage.setItem('cardVisible', 'false');
+        setTimeout(function() {
+            Sucesso.style.display = 'none'; // Esconde o card
+        }, 3000);
+    }
+    
+};
 
 function Login(event){
     event.preventDefault();
@@ -243,6 +261,7 @@ function validatePhone() {
     const countryCode = document.getElementById("country-code").value;
     const errorMessage = document.getElementById('phone-error');
     const fullNumber = countryCode + phone;
+    console.log(fullNumber);
 
     return fetch(`http://127.0.0.1:4100/api/v1/users/buscarportelefone/${fullNumber}`)
         .then((res)=>res.json())
