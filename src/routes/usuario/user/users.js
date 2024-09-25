@@ -5,6 +5,11 @@ const data = require("../../../database/config.js")
 const bcrypt = require("bcrypt");
 const round = Number(process.env.SALT)
 const jwt = require("jsonwebtoken");
+const Joi = require('joi');
+const sendEmail = require("../../utilidade/enviarEmail.js");
+const crypto = require("crypto");
+const { User } = require("../../../models/user.js");
+const Token = require("../../../models/token.js");
 
 
 router.get("/listar",(req,res)=>{
@@ -99,7 +104,7 @@ router.post("/login",(req,res)=>{
 
         bcrypt.compare(sh,result[0].senha,(err, same)=>{
             if(err){
-                return res.status(500).send({msg:"Erro ao processar o login" + err})
+                return res.status(500).send({msg:"Erro ao processar o login"})
             }
             else if(same==false){
                 return res.status(400).send({msg:"Email, CPF ou senha incorretos"})
@@ -107,7 +112,7 @@ router.post("/login",(req,res)=>{
             else{
 
                 let token = jwt.sign({idusuario:result[0].idusuario,nomeusuario:result[0].nomeusuario},
-                    process.env.JWT_KEY,{expiresIn:"2d"})
+                    process.env.JWT_KEY,{expiresIn:"1d"})
 
 
                 res.status(200).send({msg:"Autenticado", token:token})
@@ -116,5 +121,39 @@ router.post("/login",(req,res)=>{
     });
 });
 
+router.post("/resetsenha", async (req, res) => {
+    try {
+        const schema = Joi.object({ email: Joi.string().email().required() });
+        const { error } = schema.validate(req.body);
+        if (error) return res.status(400).send(error.details[0].message);
+
+        const [user] = await User.findAll({
+            where: { email: req.body.email }
+        });
+
+        if (!user) {
+            return res.status(400).send("Usuário não encontrado");
+        }
+
+        let token = await Token.findOne({ where: { idusuario: user.id } }); 
+
+        if (!token) {
+            token = await Token.create({
+                idusuario: user.id,
+                token: crypto.randomBytes(32).toString("hex"),
+            });
+        }
+
+        const baseUrl = "http://localhost:5510"; 
+        const link = `${baseUrl}/password-reset/${user.id}/${token.token}`;
+
+        await sendEmail(user.email, "Resete sua senha:", link);
+
+        res.send("Um link foi enviado para o seu email.");
+    } catch (error) {
+        res.send("Ocorreu um Erro");
+        console.log(error);
+    }
+});
 
 module.exports = router

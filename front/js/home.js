@@ -39,20 +39,21 @@ function Verify(){
             console.log(res.status);
             if (res.status === 200){
                 return res.json();
-            } else {
+            } else if (res.status === 403){
+                localStorage.removeItem('authToken');
+            }
+            else {
                 throw new Error(`Erro inesperado: ${res.status}`);
             }
         }).then((result)=>{
             if (result && result.msg === "Ok") {
-                document.querySelector('li a[href="/front/html/LogCad.html"]').parentElement.style.display = 'none';
-                localStorage.removeItem('authToken');
-                console.log("teste")
+                console.log("TA INDO")
+                document.querySelector('li a[href="./html/LogCad.html"]').parentElement.style.display = 'none';
             } 
         })
         .catch((error)=>console.error(`Erro ao tenta acessar a api ${error}`));
     } else {
-        alert("Não logado")
-        document.querySelector('li a[href="/front/html/LogCad.html"]').parentElement.style.display = 'block';
+        document.querySelector('li a[href="./html/LogCad.html"]').parentElement.style.display = 'block';
     }
 }
 
