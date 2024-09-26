@@ -3,14 +3,10 @@ const express = require("express");
 const router = express.Router();
 const data = require("../../../database/config.js")
 const bcrypt = require("bcrypt");
+const crypto = require("crypto");
 const round = Number(process.env.SALT)
 const jwt = require("jsonwebtoken");
-const Joi = require('joi');
-const sendEmail = require("../../utilidade/enviarEmail.js");
-const crypto = require("crypto");
-const { User } = require("../../../models/user.js");
-const Token = require("../../../models/token.js");
-
+const { sendEmail, mailTemplate } = require("../../utilidade/enviarEmail.js");
 
 router.get("/listar",(req,res)=>{
     data.query("select * from dbprojeto.usuario", req.params.id, (error,dados)=>{
@@ -35,27 +31,6 @@ router.post("/cadastrar",(req,res)=>{
             }
             res.status(201).send({msg:"Ok",payload:result})
         });
-    });
-});
-
-router.put("/alterarsenha/:id",(req,res)=>{
-    let sh = req.body.senha;
-
-    console.log(process.env.SALT);
-
-    bcrypt.hash(sh,round,(error,crypt)=>{
-        if(error){
-            return res.status(500).send({msg:"Erro ao tentar atualizar a senha"})
-        }
-        
-        req.body.senha = crypt;
-        data.query("update dbprojeto.usuario set ? where idusuario=?",[req.body,req.params.id],(error,result)=>{
-            if(error){
-                return res.status(500).send({msg:"Erro ao tentar atualizar a senha"})
-            }
-            res.status(200).send({msg:"Ok",payload:result})
-        });
-
     });
 });
 
@@ -121,39 +96,81 @@ router.post("/login",(req,res)=>{
     });
 });
 
-router.post("/resetsenha", async (req, res) => {
+router.post("/esqueceuasenha", async (req, res) => {
     try {
-        const schema = Joi.object({ email: Joi.string().email().required() });
-        const { error } = schema.validate(req.body);
-        if (error) return res.status(400).send(error.details[0].message);
-
-        const [user] = await User.findAll({
-            where: { email: req.body.email }
+      const email = req.body.email;
+      const user = await data.pesquisar_email(email);
+  
+      if (!user || user.length === 0) {
+        res.json({
+          success: false,
+          message: "Email inválido ou inexistente",
         });
-
-        if (!user) {
-            return res.status(400).send("Usuário não encontrado");
-        }
-
-        let token = await Token.findOne({ where: { idusuario: user.id } }); 
-
-        if (!token) {
-            token = await Token.create({
-                idusuario: user.id,
-                token: crypto.randomBytes(32).toString("hex"),
-            });
-        }
-
-        const baseUrl = "http://localhost:5510"; 
-        const link = `${baseUrl}/password-reset/${user.id}/${token.token}`;
-
-        await sendEmail(user.email, "Resete sua senha:", link);
-
-        res.send("Um link foi enviado para o seu email.");
-    } catch (error) {
-        res.send("Ocorreu um Erro");
-        console.log(error);
+      } else {
+        const token = crypto.randomBytes(20).toString("hex");
+        const resetToken = crypto
+          .createHash("sha256")
+          .update(token)
+          .digest("hex");
+        await data.token_esqueceu_senha(user[0].idusuario, resetToken);
+  
+        const mailOption = {
+          email: email,
+          subject: "Esqueceu a Senha(NÃO RESPONDA)",
+          message: mailTemplate(
+            "Você recebeu um link para resetar sua senha, clique no link abaixo para resetar sua senha.",
+            `http://127.0.0.1:4100/resetarSenha?id=${user[0].idusuario}&token=${resetToken}`,
+            //`${process.env.HOST_NAME}/resetPassword?id=${user[0].id}&token=${resetToken}`,
+            "Resetar Senha"
+          ),
+        };
+        await sendEmail(mailOption);
+        res.json({
+          success: true,
+          message: "Um link de redefinição de senha foi enviado para seu e-mail.",
+        });
+      }
+    } catch (err) {
+      console.log(err);
     }
-});
+  });
+
+  router.post("/resetarSenha", async (req, res) => {
+    try {
+      const { senha, token, userId } = req.body;
+      const userToken = await data.pegar_senha_reset_token(userId);
+      if (!res || res.length === 0) {
+        res.json({
+          success: false,
+          message: "Ocorreu um Erro",
+        });
+      } else {
+        const currDateTime = new Date();
+        const expiresAt = new Date(userToken[0].expires_at);
+        if (currDateTime > expiresAt) {
+          res.json({
+            success: false,
+            message: "Link está expirado",
+          });
+        } else if (userToken[0].token !== token) {
+          res.json({
+            success: false,
+            message: "Link inválido",
+          });
+        } else {
+          await db.atualizar_senha_reset_token(userId);
+          const salt = await bcrypt.genSalt(NumSaltRounds);
+          const hashedPassword = await bcrypt.hash(senha, salt);
+          await db.atualizar_user_senha(userId, hashedPassword);
+          res.json({
+            success: true,
+            message: "Sua senha foi resetada!",
+          });
+        }
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  });
 
 module.exports = router

@@ -147,10 +147,11 @@ const form = document.getElementById('MyForm');
 const form2 = document.getElementById('MyForm2');
 
 signinButton.addEventListener('click', function () {
-    const errorMessage = document.getElementById('data-error');
-    const errorMessage2 = document.getElementById('cpf-error');
+    const errorMessage = document.getElementById('login-error');
+    removeInputError('email2');
+    removeInputError('cpf2');
+    removeInputError('senha2');
     errorMessage.style.display = 'none';
-    errorMessage2.style.display = 'none';
     form.reset();
 });
 
