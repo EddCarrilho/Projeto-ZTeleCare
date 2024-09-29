@@ -47,10 +47,11 @@
             <form class="form">
               <div class="form-group">
                 <label for="email">Email</label>
-                <input type="text" id="email" name="email" placeholder="Coloque o seu E-mail" required="">
+                <input type="email" id="email" name="email" required placeholder="Coloque o seu E-mail">
               </div>
       
-              <button class="form-submit-btn" type="submit" onclick="Recuperar()">Enviar Email</button>
+              <button class="form-submit-btn" type="submit" onclick="Recuperar(event)">Enviar Email</button>
+              <div id="email-confirm" style="color: rgb(0, 0, 0); display: none;">link enviado ao seu E-mail</div>
             </form>
       
             <p class="signup-link">

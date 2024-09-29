@@ -12,7 +12,7 @@ const sendEmail = async (option) => {
                 pass: process.env.PASSWORD_EMAIL,
             },
             tls: {
-                rejectUnauthorized: false  // Ignora problemas com certificados auto-assinados (se necessário)
+                rejectUnauthorized: false 
             }
         });
         const mailOption = {
@@ -49,7 +49,7 @@ const mailTemplate = (content, buttonUrl, buttonText) => {
         <a href="${buttonUrl}" target="_blank">
           <button
             style="
-              background-color: #444394;
+              background-color: #0d4354;
               border: 0;
               width: 200px;
               height: 30px;

@@ -11,7 +11,7 @@ const { sendEmail, mailTemplate } = require("../../utilidade/enviarEmail.js");
 router.get("/listar",(req,res)=>{
     data.query("select * from dbprojeto.usuario", req.params.id, (error,dados)=>{
         if(error){
-            return res.status(500).send({msg:"Erro ao selecionar os dados"})
+            return res.status(500).send({msg:"Erro ao selecionar os dados", error})
         }
         return res.status(200).send({msg:"OK",payload:dados})
     });
@@ -106,6 +106,7 @@ router.post("/esqueceuasenha", async (req, res) => {
           success: false,
           message: "Email inválido ou inexistente",
         });
+        return res.status(400).send()
       } else {
         const token = crypto.randomBytes(20).toString("hex");
         const resetToken = crypto

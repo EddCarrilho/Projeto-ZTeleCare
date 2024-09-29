@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="chat.css">
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <title>Chatbot</title>
+</head>
+
+<body>
+    <header class="header">
+        <h2 class="title">Ola, amigo(a)</h2>
+        <h4 class="subtitle">Como posso te ajudar ?</h4>
+    </header>
+
+    <div class="chat-list">
+         <div class="message incoming loading">
+            <div class="message-content">
+                <img src="robot.png" class="avatar" alt="Bot">
+                <p class="text">AAAAAAAAAAAAAAAAAAAAAAAAAAA</p>
+                <div class="loading-indicator">
+                    <div class="loading-bar"></div>
+                    <div class="loading-bar"></div>
+                    <div class="loading-bar"></div>
+                </div>
+                <div class="loading-bar"></div>
+            </div>
+            <span class="icon material-symbols-rounded">content_copy</span>
+        </div> 
+    </div>
+
+
+    <div class="typing-area">
+        <form action="#" class="typing-form">
+            <div class="input-wrapper">
+                <input type="text" placeholder="Coloque o texto aqui" class="typing-input" required>
+                <button class="icon material-symbols-rounded">send</button>
+            </div>
+            <div class="action-buttons">
+                <span id="toggle-theme-button" class="icon material-symbols-rounded">light_mode</span>
+                <span id="delete-chat-button" class="icon material-symbols-rounded">delete</span>
+            </div>
+        </form>
+        <p class="disclaimer-text">
+            Este chat pode fonrnecer algumas informações incorretas, incluindo informações sobre a sáude, cheque a
+            informação dada para saber se esta correto.
+        </p>
+    </div>
+
+    <script src="chat.js"></script>
+</body>
+
+</html>
