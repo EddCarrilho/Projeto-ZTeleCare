@@ -24,7 +24,6 @@ const sendEmail = async (option) => {
         await transporter.sendMail(mailOption, (err, info) => {
             if (err) console.log(err);
         });
-        console.log("Email enviado com sucesso");
     } catch (error) {
         console.log("Falha no envio do e-mail", error);
     }
@@ -61,7 +60,9 @@ const mailTemplate = (content, buttonUrl, buttonText) => {
           </button>
         </a>
         <p style="text-align: left;">
-        Se você não conseguir clicar no botão acima, copie e cole o URL abaixo na sua barra de endereço
+        Se você não conseguir clicar no botão acima, copie e cole o URL abaixo na sua barra de endereço<br>
+        <br>
+        (ATENÇÃO!!!) Por questões de segurança, NÃO COMPARTILHE ESSA URL!!!.
         </p>
         <a href="${buttonUrl}" target="_blank">
             <p style="margin: 0px; text-align: left; font-size: 10px; text-decoration: none;">

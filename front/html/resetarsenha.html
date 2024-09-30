@@ -38,20 +38,25 @@
     <!-- Fim da header  -->
 
     <!-- Container para os conteúdos -->
-    <div class="container">
-        <div     class="form-container">
+    <div class="container" id="success">
+        <div class="form-container">
             <div class="logo-container">
-              Esqueceu a senha
+              Altere sua senha
             </div>
       
-            <form class="form" id="MyForm">
+            <form class="form">
               <div class="form-group">
-                <label for="email">Email</label>
-                <input type="email" id="email" name="email" placeholder="Coloque o seu E-mail" required>
+                <label for="senha">Nova Senha</label>
+                  <input type="password" id="senha1" placeholder="Coloque sua nova senha" required>
               </div>
-      
-              <button class="form-submit-btn" type="submit" id="botao">Enviar Email</button>
-              <div id="email-confirm" style="color: rgb(0, 0, 0); display: none;">link enviado ao seu E-mail</div>
+              <br>
+              <div class="form-group">
+                <label for="senha">Confirme a Senha</label>
+                  <input type="password" id="senha2" placeholder="Confirmar senha" required>
+              </div>
+              <div id="senha-confirm" style="color: rgb(255, 0, 0); display: none;">Senhas não coincidem</div>
+              <div id="senha-confirm2" style="color: rgb(2, 2, 2); display: none;">Senha alterada com sucesso.</div>
+              <button class="form-submit-btn" type="button" id="botao" onclick="resetsenha(event)">Alterar Senha</button>
             </form>
       
             <p class="signup-link">
@@ -59,9 +64,19 @@
               <a href="LogCad.html" class="signup-link link"> Cadastre-se</a>
             </p>
           </div>
-        
     </div>
 
+    
+<div class="error" id="error" >
+  <div class="error__icon">
+      <svg fill="none" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="m13 13h-2v-6h2zm0 4h-2v-2h2zm-1-15c-1.3132 0-2.61358.25866-3.82683.7612-1.21326.50255-2.31565 1.23915-3.24424 2.16773-1.87536 1.87537-2.92893 4.41891-2.92893 7.07107 0 2.6522 1.05357 5.1957 2.92893 7.0711.92859.9286 2.03098 1.6651 3.24424 2.1677 1.21325.5025 2.51363.7612 3.82683.7612 2.6522 0 5.1957-1.0536 7.0711-2.9289 1.8753-1.8754 2.9289-4.4189 2.9289-7.0711 0-1.3132-.2587-2.61358-.7612-3.82683-.5026-1.21326-1.2391-2.31565-2.1677-3.24424-.9286-.92858-2.031-1.66518-3.2443-2.16773-1.2132-.50254-2.5136-.7612-3.8268-.7612z" fill="#393a37"></path></svg>
+  </div>
+  <div class="error__title">Link Inválido</div>
+</div>
+
+<div id="error2">
+  <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+</div>
 
 <!-- Começo do footer -->
 
@@ -99,7 +114,7 @@
 
 <!-- Link do js  -->
 <script src="../js/menu.js"></script>
-<script src="../js/rsenha.js"></script>
+<script src="../js/rsenha2.js"></script>
 </body> 
 
 </html>

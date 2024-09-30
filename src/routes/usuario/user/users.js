@@ -7,9 +7,10 @@ const crypto = require("crypto");
 const round = Number(process.env.SALT)
 const jwt = require("jsonwebtoken");
 const { sendEmail, mailTemplate } = require("../../utilidade/enviarEmail.js");
+const con = require("../../../database/config.js");
 
 router.get("/listar",(req,res)=>{
-    data.query("select * from dbprojeto.usuario", req.params.id, (error,dados)=>{
+    data.query("select * from usuario", req.params.id, (error,dados)=>{
         if(error){
             return res.status(500).send({msg:"Erro ao selecionar os dados", error})
         }
@@ -17,25 +18,33 @@ router.get("/listar",(req,res)=>{
     });
 });
 
-router.post("/cadastrar",(req,res)=>{
-    let sh = req.body.senha;
+router.post("/cadastrar", (req, res) => {
+  let sh = req.body.senha;
 
-    bcrypt.hash(sh,round,(error,crypt)=>{
-        if(error){
-            return res.status(500).send({msg:"Erro ao tentar cadastrar", error})
-        }
-        req.body.senha = crypt;
-        data.query("INSERT INTO dbprojeto.usuario set ?",req.body,(error,result)=>{
-            if(error){
-                return res.status(500).send({msg:"Erro ao tentar cadastrar", error})
-            }
-            res.status(201).send({msg:"Ok",payload:result})
-        });
-    });
+  bcrypt.hash(sh, round, (error, crypt) => {
+      if (error) {
+          return res.status(500).send({ msg: "Erro ao tentar cadastrar", error });
+      }
+      
+      req.body.senha = crypt;
+      const { nome, cpf, datadenascimento, telefone, email, senha } = req.body;
+
+      const query = `INSERT INTO usuario (nome, cpf, datadenascimento, telefone, email, senha)
+                     VALUES ($1, $2, $3, $4, $5, $6)`;
+      const values = [nome, cpf, datadenascimento, telefone, email, req.body.senha];
+
+      data.query(query, values, (error, result) => {
+          if (error) {
+              return res.status(500).send({ msg: "Erro ao tentar cadastrar", error });
+          }
+          res.status(201).send({ msg: "Ok", payload: result });
+      });
+  });
 });
 
 router.get("/buscarporusuario/:usuario",(req,res)=>{
-    data.query("select * from dbprojeto.usuario where nome=?", req.params.usuario, (error,dados)=>{
+    const usuario = req.params.usuario
+    data.query("select * from usuario where nome=$1", [usuario], (error,dados)=>{
         if(error){
             return res.status(500).send({msg:"Erro ao selecionar os dados"})
         }
@@ -44,7 +53,8 @@ router.get("/buscarporusuario/:usuario",(req,res)=>{
 });
 
 router.get("/buscarporcpf/:cpf",(req,res)=>{
-    data.query("select * from dbprojeto.usuario where cpf=?", req.params.cpf, (error,dados)=>{
+    const cpf = req.params.cpf;
+    data.query("select * from usuario where cpf=$1", [cpf], (error,dados)=>{
         if(error){
             return res.status(500).send({msg:"Erro ao selecionar os dados"})
         }
@@ -53,7 +63,8 @@ router.get("/buscarporcpf/:cpf",(req,res)=>{
 });
 
 router.get("/buscarportelefone/:telefone",(req,res)=>{
-    data.query("select * from dbprojeto.usuario where telefone=?", req.params.telefone, (error,dados)=>{
+  const telefone = req.params.telefone;
+    data.query("select * from usuario where telefone=$1", [telefone], (error,dados)=>{
         if(error){
             return res.status(500).send({msg:"Erro ao selecionar os dados"})
         }
@@ -62,7 +73,8 @@ router.get("/buscarportelefone/:telefone",(req,res)=>{
 });
 
 router.get("/buscarporemail/:email",(req,res)=>{
-    data.query("select * from dbprojeto.usuario where email=?", req.params.email, (error,dados)=>{
+    const email = req.params.email;
+    data.query("select * from usuario where email=$1", [email], (error,dados)=>{
         if(error){
             return res.status(500).send({msg:"Erro ao selecionar os dados"})
         }
@@ -72,12 +84,15 @@ router.get("/buscarporemail/:email",(req,res)=>{
 
 router.post("/login",(req,res)=>{
     let sh = req.body.senha;
-    data.query("select * from dbprojeto.usuario where email=? and cpf=?",[req.body.email,req.body.cpf,],(error,result)=>{
-        if(error || result[0]==null){
-            return res.status(400).send({msg:"Email, CPF ou senha incorretos"})
-        }
+    const email = req.body.email;
+    const cpf = req.body.cpf;
 
-        bcrypt.compare(sh,result[0].senha,(err, same)=>{
+    data.query("select * from usuario where email=$1 and cpf=$2",[email, cpf],(error,result)=>{
+        if(error || result.rows.length === 0){
+            return res.status(400).send({msg:"Email, CPF ou senha incorretos"})
+        } 
+
+        bcrypt.compare(sh,result.rows[0].senha,(err, same)=>{
             if(err){
                 return res.status(500).send({msg:"Erro ao processar o login"})
             }
@@ -86,7 +101,7 @@ router.post("/login",(req,res)=>{
             }
             else{
 
-                let token = jwt.sign({idusuario:result[0].idusuario,nomeusuario:result[0].nomeusuario},
+                let token = jwt.sign({idusuario:result.rows[0].idusuario,nomeusuario:result.rows[0].nomeusuario},
                     process.env.JWT_KEY,{expiresIn:"1d"})
 
 
@@ -94,6 +109,16 @@ router.post("/login",(req,res)=>{
             }
         })
     });
+});
+
+router.get("/buscarportoken/:token",(req,res)=>{
+  const token = req.params.token
+  data.query(`select * from reset_token where token='${token}'`, (error,dados)=>{
+      if(error){
+          return res.status(500).send({msg:"Erro ao selecionar os dados"})
+      }
+      return res.status(200).send({msg:"OK",payload:dados})
+  });
 });
 
 router.post("/esqueceuasenha", async (req, res) => {
@@ -113,14 +138,15 @@ router.post("/esqueceuasenha", async (req, res) => {
           .createHash("sha256")
           .update(token)
           .digest("hex");
-        await data.token_esqueceu_senha(user[0].idusuario, resetToken);
+        const idUsuario = user[0].idusuario;
+        await data.token_esqueceu_senha(idUsuario, resetToken);
   
         const mailOption = {
           email: email,
           subject: "Esqueceu a Senha(NÃO RESPONDA)",
           message: mailTemplate(
             "Você recebeu um link para resetar sua senha, clique no link abaixo para resetar sua senha.",
-            `http://127.0.0.1:4100/resetarSenha?id=${user[0].idusuario}&token=${resetToken}`,
+            `http://127.0.0.1:5510/front/html/resetarsenha.html?id=${user[0].idusuario}&token=${resetToken}`,
             //`${process.env.HOST_NAME}/resetPassword?id=${user[0].id}&token=${resetToken}`,
             "Resetar Senha"
           ),
@@ -136,7 +162,7 @@ router.post("/esqueceuasenha", async (req, res) => {
     }
   });
 
-  router.post("/resetarSenha", async (req, res) => {
+  router.post("/resetarsenha", async (req, res) => {
     try {
       const { senha, token, userId } = req.body;
       const userToken = await data.pegar_senha_reset_token(userId);
@@ -145,28 +171,32 @@ router.post("/esqueceuasenha", async (req, res) => {
           success: false,
           message: "Ocorreu um Erro",
         });
+        return res.status(500);
       } else {
         const currDateTime = new Date();
-        const expiresAt = new Date(userToken[0].expires_at);
-        if (currDateTime > expiresAt) {
+        const expiraEm = new Date(userToken.expira_em);
+        if (currDateTime > expiraEm) {
           res.json({
             success: false,
             message: "Link está expirado",
           });
-        } else if (userToken[0].token !== token) {
+          return res.status(400);
+        } else if (userToken.token !== token) {
           res.json({
             success: false,
             message: "Link inválido",
           });
+          return res.status(400);
         } else {
-          await db.atualizar_senha_reset_token(userId);
-          const salt = await bcrypt.genSalt(NumSaltRounds);
+          await con.atualizar_senha_reset_token(userId);
+          const salt = await bcrypt.genSalt(round);
           const hashedPassword = await bcrypt.hash(senha, salt);
-          await db.atualizar_user_senha(userId, hashedPassword);
+          await con.atualizar_user_senha(userId, hashedPassword);
           res.json({
             success: true,
             message: "Sua senha foi resetada!",
           });
+          return res.status(200);
         }
       }
     } catch (err) {

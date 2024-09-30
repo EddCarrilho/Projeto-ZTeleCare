@@ -1,7 +1,6 @@
-function Recuperar(event) {
+function Recuperar() {
     const email = document.querySelector("#email");
     const emailMessage = document.getElementById('email-confirm');
-
     fetch(`http://127.0.0.1:4100/api/v1/users/esqueceuasenha`,{
         method:"POST",
         headers:{
@@ -15,7 +14,6 @@ function Recuperar(event) {
         .then((dados)=>{
             if (dados && dados.success === true) {
             emailMessage.style.display = 'block';
-            event.preventDefault();
             }
         })
         .catch((error)=> {
@@ -24,6 +22,11 @@ function Recuperar(event) {
 }
 
 document.addEventListener("DOMContentLoaded", function() {
+        document.getElementById('MyForm').addEventListener('submit', function(event) {
+            document.getElementById('botao').disabled = true;
+            Recuperar();
+            event.preventDefault();
+        });
     Verify();
 });
 
@@ -36,7 +39,6 @@ function Verify(){
             'Authorization': `Bearer ${token}`
             }
         }).then((res)=> {
-            console.log(res.status);
             if (res.status === 200){
                 return res.json();
             } else if (res.status === 403){

@@ -14,7 +14,7 @@ routerchat.post("/mensagem", (req, res) => {
 });
 
 routerchat.get("/listar-mensens", (req, res) => {
-    data.query("select * from dbprojeto.mensagem", req.params.id, (error, dados) => {
+    data.query("select * from mensagem", req.params.id, (error, dados) => {
         if (error) {
             return res.status(500).send({ msg: "Erro ao selecionar dos dados" });
         }

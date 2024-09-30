@@ -48,7 +48,6 @@ function Verify(){
         }).then((result)=>{
             if (result && result.msg === "Ok") {
                 document.querySelector('li a[href="./html/LogCad.html"]').parentElement.style.display = 'none';
-
             } 
         })
         .catch((error)=>console.error(`Erro ao tenta acessar a api ${error}`));

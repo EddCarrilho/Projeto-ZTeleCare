@@ -45,7 +45,6 @@ function Cadastrar(event){
                         const Sucesso = document.getElementById('card');
                         Sucesso.style.display = 'inline-flex';
                         localStorage.setItem('cardVisible', 'true');
-                        console.log({result});
                         location.reload();
                     })
                     .catch((error) => console.error(`Erro na API: ${error}`));
@@ -64,10 +63,10 @@ window.onload = function() {
         Sucesso.style.display = 'inline-flex';
         localStorage.setItem('cardVisible', 'false');
         setTimeout(function() {
-            Sucesso.style.display = 'none'; // Esconde o card
+            Sucesso.style.display = 'none';
+            localStorage.setItem('cardVisible', 'false');
         }, 3000);
     }
-    
 };
 
 function Login(event){
@@ -207,11 +206,11 @@ function applyCpfMask(event) {
     cpf = cpf.replace(/\D/g, '');
     
     if (cpf.length <= 11) {
-        cpf = cpf.replace(/(\d{3})(\d{1,3})/, '$1.$2');
-        cpf = cpf.replace(/(\d{3})(\d{1,2})/, '$1.$2');
-        cpf = cpf.replace(/(\d{3})(\d{1,2})/, '$1-$2');
+        cpf = cpf.replace(/(\d{3})(\d)/, '$1.$2');
+        cpf = cpf.replace(/(\d{3})(\d)/, '$1.$2');
+        cpf = cpf.replace(/(\d{3})(\d{1,2})$/, '$1-$2');
     }
-    
+
     event.target.value = cpf;
 }
 
@@ -271,10 +270,16 @@ function validateCpf() {
     return fetch(`http://127.0.0.1:4100/api/v1/users/buscarporcpf/${cleanCpf}`)
         .then((res)=>res.json())
         .then((dados)=>{
-            if (dados.payload && dados.payload.length > 0 || cpf.length < 14) {
-                setInputError('cpf');
-                errorMessage.style.display = 'block';
-                return false;
+            if (dados.payload && dados.payload.rows.length > 0 || cpf.length < 14) {
+                if(dados.payload.rows[0].cpf.length > 0) {
+                    setInputError('cpf');
+                    errorMessage.style.display = 'block';
+                    return false;
+                }  else {
+                    removeInputError('cpf');
+                    errorMessage.style.display = 'none';
+                    return true;
+                }
             } else {
                 removeInputError('cpf');
                 errorMessage.style.display = 'none';
@@ -292,15 +297,20 @@ function validatePhone() {
     const countryCode = document.getElementById("country-code").value;
     const errorMessage = document.getElementById('phone-error');
     const fullNumber = countryCode + phone;
-    console.log(fullNumber);
 
     return fetch(`http://127.0.0.1:4100/api/v1/users/buscarportelefone/${fullNumber}`)
         .then((res)=>res.json())
         .then((dados)=>{
-            if (dados.payload && dados.payload.length > 0 && phone >= 10) {
-                setInputError('phone');
-                errorMessage.style.display = 'block';
-                return false;
+            if (dados.payload && dados.payload.rows.length > 0 || phone < 10) {
+                if(dados.payload.rows[0].telefone.length > 0) {
+                    setInputError('phone');
+                    errorMessage.style.display = 'block';
+                    return false;
+                } else {
+                    removeInputError('phone');
+                    errorMessage.style.display = 'none';
+                    return true;
+                }
             } else {
                 removeInputError('phone');
                 errorMessage.style.display = 'none';
@@ -321,10 +331,16 @@ function validateEmail() {
     return fetch(`http://127.0.0.1:4100/api/v1/users/buscarporemail/${email}`)
         .then((res)=>res.json())
         .then((dados)=>{
-            if (dados.payload && dados.payload.length > 0) {
-                setInputError('email');
-                errorMessage.style.display = 'block';
-                return false;
+            if (dados.payload && dados.payload.rows.length > 0) {
+                if(dados.payload.rows[0].telefone.length > 0) {
+                    setInputError('email');
+                    errorMessage.style.display = 'block';
+                    return false;
+                } else {
+                    removeInputError('email');
+                    errorMessage.style.display = 'none';
+                    return true;
+                }
             } else {
                 removeInputError('email');
                 errorMessage.style.display = 'none';
@@ -351,21 +367,31 @@ function LoginError() {
     return fetch(`http://127.0.0.1:4100/api/v1/users/buscarporemail/${email}`)
         .then((res)=>res.json())
         .then((dados)=>{
-            if (dados.payload && dados.payload.length > 0) {
-                removeInputError('email2');
-                removeInputError('cpf2');
-                removeInputError('senha2');
-                errorMessage.style.display = 'none';
-            
-                return fetch(`http://127.0.0.1:4100/api/v1/users/buscarporcpf/${cleanCpf}`)
+            if (dados.payload && dados.payload.rows.length > 0) {
+                if (dados.payload.rows[0].email.length > 0) {
+                    removeInputError('email2');
+                    removeInputError('cpf2');
+                    removeInputError('senha2');
+                    errorMessage.style.display = 'none';
+
+
+                    return fetch(`http://127.0.0.1:4100/api/v1/users/buscarporcpf/${cleanCpf}`)
                     .then((res)=>res.json())
                     .then((dados)=>{
-                        if (dados.payload && dados.payload.length > 0) {
-                            removeInputError('email2');
-                            removeInputError('cpf2');
-                            removeInputError('senha2');
-                            errorMessage.style.display = 'none';
-                            return true;
+                        if (dados.payload && dados.payload.rows.length > 0) {
+                            if (dados.payload.rows[0].cpf.length > 0) {
+                                removeInputError('email2');
+                                removeInputError('cpf2');
+                                removeInputError('senha2');
+                                errorMessage.style.display = 'none';
+                                return true;
+                            }   else {
+                            setInputError('email2');
+                            setInputError('cpf2');
+                            setInputError('senha2');
+                            errorMessage.style.display = 'block';
+                            return false;
+                          };
                         }  else {
                             setInputError('email2');
                             setInputError('cpf2');
@@ -375,6 +401,13 @@ function LoginError() {
                           };
                         
                     });
+                } else {
+                    setInputError('email2');
+                    setInputError('cpf2');
+                    setInputError('senha2');
+                    errorMessage.style.display = 'block';
+                    return false;
+                };
             } else {
                 setInputError('email2');
                 setInputError('cpf2');
