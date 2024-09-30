@@ -42,6 +42,30 @@ router.post("/cadastrar", (req, res) => {
   });
 });
 
+router.post("/cadastrar2", (req, res) => {
+  let sh = req.body.senha;
+
+  bcrypt.hash(sh, round, (error, crypt) => {
+      if (error) {
+          return res.status(500).send({ msg: "Erro ao tentar cadastrar", error });
+      }
+      
+      req.body.senha = crypt;
+      const { nome, cpf, especialidade, email, telefone, senha } = req.body;
+
+      const query = `INSERT INTO medico (nome, cpf, especialidade, email, telefone, senha)
+                     VALUES ($1, $2, $3, $4, $5, $6)`;
+      const values = [nome, cpf, especialidade, email, telefone, req.body.senha];
+
+      data.query(query, values, (error, result) => {
+          if (error) {
+              return res.status(500).send({ msg: "Erro ao tentar cadastrar", error });
+          }
+          res.status(201).send({ msg: "Ok", payload: result });
+      });
+  });
+});
+
 router.get("/buscarporusuario/:usuario",(req,res)=>{
     const usuario = req.params.usuario
     data.query("select * from usuario where nome=$1", [usuario], (error,dados)=>{
@@ -62,6 +86,16 @@ router.get("/buscarporcpf/:cpf",(req,res)=>{
     });
 });
 
+router.get("/buscarporcpf2/:cpf",(req,res)=>{
+  const cpf = req.params.cpf;
+  data.query("select * from medico where cpf=$1", [cpf], (error,dados)=>{
+      if(error){
+          return res.status(500).send({msg:"Erro ao selecionar os dados"})
+      }
+      return res.status(200).send({msg:"OK",payload:dados})
+  });
+});
+
 router.get("/buscarportelefone/:telefone",(req,res)=>{
   const telefone = req.params.telefone;
     data.query("select * from usuario where telefone=$1", [telefone], (error,dados)=>{
@@ -80,6 +114,16 @@ router.get("/buscarporemail/:email",(req,res)=>{
         }
         return res.status(200).send({msg:"OK",payload:dados})
     });
+});
+
+router.get("/buscarporemail2/:email",(req,res)=>{
+  const email = req.params.email;
+  data.query("select * from medico where email=$1", [email], (error,dados)=>{
+      if(error){
+          return res.status(500).send({msg:"Erro ao selecionar os dados"})
+      }
+      return res.status(200).send({msg:"OK",payload:dados})
+  });
 });
 
 router.post("/login",(req,res)=>{
@@ -109,6 +153,34 @@ router.post("/login",(req,res)=>{
             }
         })
     });
+});
+
+router.post("/login2",(req,res)=>{
+  let sh = req.body.senha;
+  const email = req.body.email;
+  const cpf = req.body.cpf;
+  data.query("select * from medico where email=$1 and cpf=$2",[email, cpf],(error,result)=>{
+      if(error || result.rows.length === 0){
+          return res.status(400).send({msg:"Email, CPF ou senha incorretos",})
+      } 
+
+      bcrypt.compare(sh,result.rows[0].senha,(err, same)=>{
+          if(err){
+              return res.status(500).send({msg:"Erro ao processar o login"})   
+          }
+          else if(same==false){
+              return res.status(400).send({msg:"Email, CPF ou senha incorretos"})
+          }
+          else{
+
+              let token = jwt.sign({idmedico:result.rows[0].idmedico,nomemedico:result.rows[0].nomemedico},
+                  process.env.JWT_KEY,{expiresIn:"1d"})
+
+
+              res.status(200).send({msg:"Autenticado", token:token})
+          }
+      })
+  });
 });
 
 router.get("/buscarportoken/:token",(req,res)=>{

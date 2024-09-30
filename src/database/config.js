@@ -36,6 +36,17 @@ con.pesquisar_email = async (email) => {
     }
 };
 
+con.pesquisar_email2 = async (email) => {
+  const query = `SELECT * FROM usuario where email=$1;`;
+  try {
+    const { rows } = await con.query(query, [email]);
+    return rows;
+  } catch (error) {
+    console.error("Erro ao executar a consulta:", error);
+    throw error; 
+  }
+};
+
 con.token_esqueceu_senha = async (user_id, token) => {
   const criadoem = new Date().toISOString();
   const expiraem = new Date(Date.now() + 60 * 60 * 24 * 1000).toISOString();

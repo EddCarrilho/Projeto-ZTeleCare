@@ -71,9 +71,9 @@ window.onload = function() {
 
 function Login(event){
     event.preventDefault();
-    const email2 = document.querySelector("#email2");
+    const email2 = document.querySelector("#email2").value;
     const cpf2 = document.querySelector("#cpf2").value;
-    const senha2 = document.querySelector("#senha2");
+    const senha2 = document.querySelector("#senha2").value;
     const errorMessage = document.getElementById('login-error');
 
     const cleanCpf2 = getcleancpf2(cpf2);
@@ -114,7 +114,44 @@ function Login(event){
                 }
             })
             .catch((error)=>console.error(`Erro ao tenta acessar a api ${error}`));
-        };
+        } else {
+            LoginError2().then((isLoginValid2) => {
+                if (isLoginValid2) {
+                    fetch("http://127.0.0.1:4100/api/v1/users/login2",{
+                        method:"POST",
+                        headers:{
+                            "accept":"application/json",
+                            "content-type":"application/json"
+                        },
+                        body:JSON.stringify({
+                            email:email2.value,
+                            cpf:cleanCpf2,
+                            senha:senha2.value
+                        })
+                    }).then((res)=> {
+                        if (res.status === 400) {
+                            setInputError('email2');
+                            setInputError('cpf2');
+                            setInputError('senha2');
+                            errorMessage.style.display = 'block';
+                            return;
+                        } else if (res.status === 200){
+                            return res.json();
+                        } else {
+                            throw new Error(`Erro inesperado: ${res.status}`);
+                        }
+                    }).then((result)=>{
+                        if (result) {
+                            const token = result.token;
+                            localStorage.setItem('authToken', token);
+                            window.parent.postMessage(localStorage.getItem('authToken'), 'http://127.0.0.1:5510');
+                            window.location.href = 'http://127.0.0.1:5510/front/home.html';
+                        }
+                    })
+                    .catch((error)=>console.error(`Erro ao tenta acessar a api ${error}`));
+                }
+            });
+        }
     });
 }    
 
@@ -363,8 +400,82 @@ function LoginError() {
     function getcleancpf(cpf) {
         return cpf.replace(/\D/g, '');
     }
+    
+    return fetch(`http://127.0.0.1:4100/api/v1/users/buscarporcpf2/${cleanCpf}`)
+        .then((res)=>res.json())
+        .then((dados)=>{
+            if (dados.payload && dados.payload.rows.length > 0) {
+                return false;
+            } else {
+                return fetch(`http://127.0.0.1:4100/api/v1/users/buscarporemail/${email}`)
+                    .then((res)=>res.json())
+                    .then((dados)=>{
+                        if (dados.payload && dados.payload.rows.length > 0) {
+                            if (dados.payload.rows[0].email.length > 0) {
+                                removeInputError('email2');
+                                removeInputError('cpf2');
+                                removeInputError('senha2');
+                                errorMessage.style.display = 'none';
 
-    return fetch(`http://127.0.0.1:4100/api/v1/users/buscarporemail/${email}`)
+
+                                return fetch(`http://127.0.0.1:4100/api/v1/users/buscarporcpf/${cleanCpf}`) 
+                                    .then((res)=>res.json())
+                                    .then((dados)=>{
+                                        if (dados.payload && dados.payload.rows.length > 0) {
+                                            if (dados.payload.rows[0].cpf.length > 0) {
+                                                removeInputError('email2');
+                                                removeInputError('cpf2');
+                                                removeInputError('senha2');
+                                                errorMessage.style.display = 'none';
+                                                return true;
+                                            } else {
+                                                setInputError('email2');
+                                                setInputError('cpf2');
+                                                setInputError('senha2');
+                                                errorMessage.style.display = 'block';
+                                                return false;
+                                            };
+                                        }  else {
+                                            setInputError('email2');
+                                            setInputError('cpf2');
+                                            setInputError('senha2');
+                                            errorMessage.style.display = 'block';
+                                            return false;
+                                        };
+                        
+                                });
+                            } else {
+                                setInputError('email2');
+                                setInputError('cpf2');
+                                setInputError('senha2');
+                                errorMessage.style.display = 'block';
+                                return false;
+                };
+            } else {
+                setInputError('email2');
+                setInputError('cpf2');
+                setInputError('senha2');
+                errorMessage.style.display = 'block';
+                return false;
+              };
+        });
+            }
+        });
+                    
+};
+
+function LoginError2() {
+
+    const email = document.querySelector("#email2").value;
+    const cpf = document.querySelector("#cpf2").value;
+    const errorMessage = document.getElementById('login-error');
+
+    const cleanCpf = getcleancpf(cpf);
+    function getcleancpf(cpf) {
+        return cpf.replace(/\D/g, '');
+    }
+    
+    return fetch(`http://127.0.0.1:4100/api/v1/users/buscarporemail2/${email}`)
         .then((res)=>res.json())
         .then((dados)=>{
             if (dados.payload && dados.payload.rows.length > 0) {
@@ -375,38 +486,38 @@ function LoginError() {
                     errorMessage.style.display = 'none';
 
 
-                    return fetch(`http://127.0.0.1:4100/api/v1/users/buscarporcpf/${cleanCpf}`)
-                    .then((res)=>res.json())
-                    .then((dados)=>{
-                        if (dados.payload && dados.payload.rows.length > 0) {
-                            if (dados.payload.rows[0].cpf.length > 0) {
-                                removeInputError('email2');
-                                removeInputError('cpf2');
-                                removeInputError('senha2');
-                                errorMessage.style.display = 'none';
-                                return true;
-                            }   else {
-                            setInputError('email2');
-                            setInputError('cpf2');
-                            setInputError('senha2');
-                            errorMessage.style.display = 'block';
-                            return false;
-                          };
-                        }  else {
-                            setInputError('email2');
-                            setInputError('cpf2');
-                            setInputError('senha2');
-                            errorMessage.style.display = 'block';
-                            return false;
-                          };
+                    return fetch(`http://127.0.0.1:4100/api/v1/users/buscarporcpf2/${cleanCpf}`) 
+                        .then((res)=>res.json())
+                        .then((dados)=>{
+                            if (dados.payload && dados.payload.rows.length > 0) {
+                                if (dados.payload.rows[0].cpf.length > 0) {
+                                    removeInputError('email2');
+                                    removeInputError('cpf2');
+                                    removeInputError('senha2');
+                                    errorMessage.style.display = 'none';
+                                    return true;
+                                } else {
+                                    setInputError('email2');
+                                    setInputError('cpf2');
+                                    setInputError('senha2');
+                                    errorMessage.style.display = 'block';
+                                    return false;
+                                    };
+                            }  else {
+                                setInputError('email2');
+                                setInputError('cpf2');
+                                setInputError('senha2');
+                                errorMessage.style.display = 'block';
+                                return false;
+                                };
                         
-                    });
-                } else {
-                    setInputError('email2');
-                    setInputError('cpf2');
-                    setInputError('senha2');
-                    errorMessage.style.display = 'block';
-                    return false;
+                                });
+                            } else {
+                                setInputError('email2');
+                                setInputError('cpf2');
+                                setInputError('senha2');
+                                errorMessage.style.display = 'block';
+                                return false;
                 };
             } else {
                 setInputError('email2');
@@ -417,6 +528,9 @@ function LoginError() {
               };
         });
 };
+                
+    
+                
 
 function setInputError(inputId) {
     const input = document.getElementById(inputId);

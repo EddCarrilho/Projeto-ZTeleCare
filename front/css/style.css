@@ -693,7 +693,7 @@ header .fa-times {
     display: flex;
     align-items: center;
     z-index: 9999;
-    left: 170vh;
+    left: 140vh;
     top: 85vh; 
     justify-content: space-around;
     gap: 15px;
@@ -938,7 +938,7 @@ header .fa-times {
         }
     }
     .card {
-        left: 80vh;
+        left: 70vh;
     }
 }
 
@@ -998,7 +998,7 @@ header .fa-times {
         padding: 1rem 0;
     }
     .card {
-        left: 50vh;
+        left: 60vh;
     }
 }
 

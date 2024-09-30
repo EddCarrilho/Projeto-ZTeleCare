@@ -118,9 +118,6 @@ const sendMessage = (event) => {
             
         })
       }).then((res) => res.json())
-        .then((result) => {
-          console.log(result);
-        })
        
      websocket.send(JSON.stringify(message))
   
