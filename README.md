@@ -48,8 +48,3 @@ Para suporte, mande um email para ztelecare@gmail.com
 ## Feedback
  
 Se você tiver algum feedback, por favor nos deixe saber por meio de ztelecare@gmail.com
- 
-tem menu de contexto
-
-
-tem menu de contexto
