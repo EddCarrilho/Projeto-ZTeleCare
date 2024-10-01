@@ -94,7 +94,7 @@ ${element.text}</textarea>
   if (notesObj.length != 0) {
     row.innerHTML = html;
   } else {
-    row.innerHTML = `<h4>Sem anotações por agora. Faça uma anotação !<img src="../images/arrow.png" width="50"/></h4>`;
+    row.innerHTML = `<h4>Sem anotações por agora. Faça uma anotação !<img src="../img/arrow.png" width="50"/></h4>`;
   }
 }
 

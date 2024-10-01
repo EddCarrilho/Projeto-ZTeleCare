@@ -178,7 +178,7 @@ header .fa-times {
   background: linear-gradient(45deg,
       rgba(13, 60, 84, 0.7) 0%,
       rgba(13, 67, 84, 1) 100%),
-    url('../images/celular.png');
+    url('../img/celular.png');
   background-size: cover;
 
 }
@@ -188,7 +188,7 @@ header .fa-times {
   background: linear-gradient(45deg,
       rgba(13, 60, 84, 0.7) 0%,
       rgba(13, 67, 84, 1) 100%),
-    url('../images/paciente.jpg');
+    url('../img/paciente.jpg');
   background-size: cover;
 
 }
@@ -197,7 +197,7 @@ header .fa-times {
   background: linear-gradient(45deg,
       rgba(13, 60, 84, 0.7) 0%,
       rgba(13, 67, 84, 1) 100%),
-    url('../images/medico2.jpg');
+    url('../img/medico2.jpg');
   background-size: cover;
 
 }
@@ -206,7 +206,7 @@ header .fa-times {
   background: linear-gradient(45deg,
       rgba(13, 60, 84, 0.7) 0%,
       rgba(13, 67, 84, 1) 100%),
-    url('../images/duvidas2.jpg');
+    url('../img/duvidas2.jpg');
   background-size: cover;
 
 }
