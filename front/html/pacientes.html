@@ -1,0 +1,193 @@
+<!-- 
+Responsive HTML Table With Pure CSS - Web Design/UI Design
+
+Code written by:
+👨🏻‍⚕️ Coding Design (Jeet Saru)
+
+> You can do whatever you want with the code. However if you love my content, you can **SUBSCRIBED** my YouTube Channel.
+
+🌎link: www.youtube.com/codingdesign 
+ -->
+ <!DOCTYPE html>
+ <html lang="pt-br">
+ 
+ <head>
+     <meta charset="UTF-8">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+     <title> Paciente</title>
+     <link rel="stylesheet" type="text/css" href="../css/pacientes.css">
+ </head>
+ 
+ <body>
+     <main class="table" id="customers_table">
+         <section class="table__header">
+             <h1>Paciente</h1>
+             <div class="input-group">
+                 <input type="search" placeholder="Procure sobre...">
+                 <img src="../img/search.png" alt="">
+             </div>
+             <div class="export__file">
+                 <label for="export-file" class="export__file-btn" title="Export File"></label>
+                 <input type="checkbox" id="export-file">
+                 <div class="export__file-options">
+                     <label>Exporte como &nbsp; &#10140;</label>
+                     <label for="export-file" id="toPDF">PDF <img src="../img/pdf.png" alt=""></label>
+                     <label for="export-file" id="toJSON">JSON <img src="../img/json.png" alt=""></label>
+                     <label for="export-file" id="toCSV">CSV <img src="../img/csv.png" alt=""></label>
+                     <label for="export-file" id="toEXCEL">EXCEL <img src="../img/excel.png" alt=""></label>
+                 </div>
+             </div>
+         </section>
+         <section class="table__body">
+             <table>
+                 <thead>
+                     <tr>
+                         <th> Id <span class="icon-arrow">&UpArrow;</span></th>
+                         <th> Paciente    <span class="icon-arrow">&UpArrow;</span></th>
+                         <th> Endereço <span class="icon-arrow">&UpArrow;</span></th>
+                         <th> Data de cadastro <span class="icon-arrow">&UpArrow;</span></th>
+                         <th> Status <span class="icon-arrow">&UpArrow;</span></th>
+                         <th> CPF <span class="icon-arrow">&UpArrow;</span></th>
+                     </tr>
+                 </thead>
+                 <tbody>
+                     <tr>
+                         <td> 1 </td>
+                         <td> <img src="../img/Marcos.jpg" alt="">Marcos</td>
+                         <td> Itaquera </td>
+                         <td> 23 Fev, 2024 </td>
+                         <td>
+                             <p class="status delivered">Atendido</p>
+                         </td>
+                         <td> <strong> 233.271.334-50 </strong></td>
+                     </tr>
+                     <tr>
+                         <td> 2 </td>
+                         <td><img src="../img/Rosangela.jpg" alt=""> Rosangela </td>
+                         <td> Guaianases </td>
+                         <td> 2 Jan, 2024 </td>
+                         <td>
+                             <p class="status cancelled">Não Atendido</p>
+                         </td>
+                         <td> <strong> 661.562.241-24</strong> </td>
+                     </tr>
+                     <tr>
+                         <td> 3</td>
+                         <td><img src="../img/Carlos.jpg" alt=""> Carlos Almeida </td>
+                         <td> Brooklin </td>
+                         <td> 14 Mar, 2024 </td>
+                         <td>
+                             <p class="status shipped"> Em análise </p>
+                         </td>
+                         <td> <strong> 352.541.241.50</strong> </td>
+                     </tr>
+                     <tr>
+                         <td> 4</td>
+                         <td><img src="../img/Pedro.jpg" alt=""> Pedro Santos </td>
+                         <td> Sumaré </td>
+                         <td> 27 Mai, 2024 </td>
+                         <td>
+                             <p class="status delivered">Atendido</p>
+                         </td>
+                         <td> <strong>412.452.123-31</strong> </td>
+                     </tr>
+                     <tr>
+                         <td> 5</td>
+                         <td><img src="../img/Sarah.jpg" alt=""> Sarah Gomes </td>
+                         <td> Carrão</td>
+                         <td> 23 Abr, 2024 </td>
+                         <td>
+                             <p class="status pending">Em Atendimento</p>
+                         </td>
+                         <td> <strong>216.318.218-01</strong> </td>
+                     </tr>
+                     <tr>
+                         <td> 6</td>
+                         <td><img src="../img/Alex.jpg" alt=""> Alex Gomes </td>
+                         <td> Jaraguá </td>
+                         <td> 01 Out, 2024 </td>
+                         <td>
+                             <p class="status cancelled">Não atendido</p>
+                         </td>
+                         <td> <strong>531.123.217-19</strong> </td>
+                     </tr>
+                     <tr>
+                         <td> 7</td>
+                         <td><img src="../img/Thayna.jpg" alt=""> Thayna </td>
+                         <td> Aricanduva </td>
+                         <td> 20 Mai, 2024 </td>
+                         <td>
+                             <p class="status delivered">Atendido</p>
+                         </td>
+                         <td> <strong> 152.721.642-42</strong> </td>
+                     </tr>
+                     <tr>
+                         <td> 8</td>
+                         <td><img src="../img/Arthur.jpg" alt=""> Arthur Aparicio </td>
+                         <td> Penha </td>
+                         <td> 30 Fev, 2024 </td>
+                         <td>
+                             <p class="status pending">Em Atendimento</p>
+                         </td>
+                         <td> <strong>241.521.251-21</strong> </td>
+                     </tr>
+                     <tr>
+                         <td> 9</td>
+                         <td><img src="../img/Gabriel.jpg" alt=""> Gabriel Moura </td>
+                         <td> Itaim Bibi </td>
+                         <td> 02 Mar, 2024 </td>
+                         <td>
+                             <p class="status cancelled"> Não Atendido</p>
+                         </td>
+                         <td> <strong> 452.152.265-21 </strong> </td>
+                     </tr>
+                     <tr>
+                         <td> 10</td>
+                         <td><img src="../img/Thalis.jpg" alt=""> Thalis Costa </td>
+                         <td> Jardim Paulista </td>
+                         <td> 24 Jul, 2024 </td>
+                         <td>
+                             <p class="status cancelled">Não Atendido</p>
+                         </td>
+                         <td> <strong> 432.572.235-12 </strong> </td>
+                     </tr>
+                     <tr>
+                         <td> 11</td>
+                         <td><img src="../img/Ana.jpg" alt=""> Ana Maria </td>
+                         <td> Mooca </td>
+                         <td> 17 Jun, 2024 </td>
+                         <td>
+                             <p class="status cancelled">Não Atendido</p>
+                         </td>
+                         <td> <strong> 528.112.234-04</strong> </td>
+                     </tr>
+                     <tr>
+                         <td> 12</td>
+                         <td><img src="../img/Fernanda.jpg" alt=""> Fernanda </td>
+                         <td> Sé </td>
+                         <td> 13 Abr, 2024 </td>
+                         <td>
+                             <p class="status cancelled">Não Atendido</p>
+                         </td>
+                         <td> <strong>542.123.234-01</strong> </td>
+                     </tr>
+                     <tr>
+                         <td> 13</td>
+                         <td><img src="../img/Elsom.jpg" alt=""> Elsom Otávio </td>
+                         <td> Santana </td>
+                         <td> 22 Dez, 2023 </td>
+                         <td>
+                             <p class="status cancelled">Não Atendido</p>
+                         </td>
+                         <td> <strong>666.777.333-22</strong> </td>
+                     </tr>
+                 </tbody>
+             </table>
+         </section>
+     </main>
+     <script src="../js/pacientes.js"></script>
+ 
+ </body>
+ 
+ </html>

@@ -4,7 +4,7 @@ const routerchat = express.Router();
 
 routerchat.post("/mensagem", (req, res) => {
     console.log(req.body);
-    data.query("insert into mensagem set ?", req.body, (error, result) => {
+    data.query("insert into mensagem set $1", req.body, (error, result) => {
         if (error) {
             return res.status(500).send({ msg: "Erro ao tentar cadastrar" })
         }
@@ -23,7 +23,7 @@ routerchat.get("/listar-mensens", (req, res) => {
 });
 
 routerchat.delete("/deletar_message", (req, res) => {
-    data.query(deletar, ('DELETE FROM mensagem  WHERE user_id = ?'), (error, results) => {
+    data.query(deletar, ('DELETE FROM mensagem  WHERE user_id = $1'), (error, results) => {
         if (error) {
             return res.status(500).send({ msg: "Erro ao tentar encerrar o chat" });
         }

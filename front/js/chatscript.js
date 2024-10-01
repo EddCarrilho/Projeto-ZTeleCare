@@ -91,7 +91,6 @@ const handleLogin = (event) => {
 
     websocket = new WebSocket("https://chat-ztalecare.onrender.com")
     websocket.onmessage = processMessage
-    console.log(processMessage)
 }
 
 const sendMessage = (event) => {

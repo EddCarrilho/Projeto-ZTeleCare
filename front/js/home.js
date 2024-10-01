@@ -28,6 +28,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
 function Verify(){
     const token = localStorage.getItem('authToken');
+    const deslogarLi = document.querySelector('li[onclick="Deslogar()"]');
 
     if (token) {
         fetch("http://127.0.0.1:4100/api/v1/personaldata/verify",{
@@ -48,11 +49,13 @@ function Verify(){
         }).then((result)=>{
             if (result && result.msg === "Ok") {
                 document.querySelector('li a[href="./html/LogCad.html"]').parentElement.style.display = 'none';
+                deslogarLi.style.display = 'block';
             } 
         })
         .catch((error)=>console.error(`Erro ao tenta acessar a api ${error}`));
     } else {
         document.querySelector('li a[href="./html/LogCad.html"]').parentElement.style.display = 'block';
+        deslogarLi.style.display = 'none';
     }
 }
 
@@ -80,5 +83,12 @@ function apenasNumeros(event) {
     if (!/^[0-9]$/.test(char)) {
         event.preventDefault();
     }
+}
+
+function Deslogar() {
+    const deslogarLi = document.querySelector('li[onclick="Deslogar()"]');
+    localStorage.removeItem('authToken');
+    deslogarLi.style.display = 'none';
+    window.location.href = "http://127.0.0.1:5510/front/html/LogCad.html";
 }
 
