@@ -1,6 +1,6 @@
 # Projeto Z-Telecare
  
-Site  de Apoio Psicológico: Um app que oferece suporte emocional e psicológico, conectando os usuários a profissionais de saúde mental e grupos de apoio, além de fornecer conteúdo educativo sobre bem-estar emocional.
+Site  de Apoio Psicológico: Um site responsivo que oferece suporte emocional e psicológico, conectando os usuários a profissionais de saúde mental e grupos de apoio, além de fornecer conteúdo educativo sobre bem-estar emocional.
  
  
 ## Autores
