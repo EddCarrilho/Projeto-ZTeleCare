@@ -42,7 +42,7 @@ Para suporte, mande um email para ztelecare@gmail.com
  
 **Front-end:** Html e  CSS
  
-**Back-end:** Node, Express,bcrypt,cors,crypto,dotenv,fs,helmet,jsonwebtoken,morgan,nodemailer,pg e sequelize
+**Back-end:** Node, dotenv, express, crypto, nodemailer, bcrypt, cors, fs, helmet, jsonwebtoken, morgan,pg e sequelize
  
  
 ## Feedback
