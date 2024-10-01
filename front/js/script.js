@@ -116,6 +116,15 @@ function Login(event){
             .catch((error)=>console.error(`Erro ao tenta acessar a api ${error}`));
         } else {
             LoginError2().then((isLoginValid2) => {
+                const email2 = document.querySelector("#email2").value;
+                const cpf2 = document.querySelector("#cpf2").value;
+                const senha2 = document.querySelector("#senha2").value;
+                const errorMessage = document.getElementById('login-error');
+
+                const cleanCpf2 = getcleancpf2(cpf2);
+                function getcleancpf2(cpf2) {
+                    return cpf2.replace(/\D/g, '');
+                }
                 if (isLoginValid2) {
                     fetch("http://127.0.0.1:4100/api/v1/users/login2",{
                         method:"POST",
@@ -124,10 +133,11 @@ function Login(event){
                             "content-type":"application/json"
                         },
                         body:JSON.stringify({
-                            email:email2.value,
+                            email:email2,
                             cpf:cleanCpf2,
-                            senha:senha2.value
+                            senha:senha2
                         })
+                        
                     }).then((res)=> {
                         if (res.status === 400) {
                             setInputError('email2');

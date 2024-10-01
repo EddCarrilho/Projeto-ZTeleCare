@@ -1,0 +1,16 @@
+HOST_NAME="Ip ou nome do seu servidor"
+HOST_DATABASE="Ip ou domínio do seu servidor"
+USER_NAME="Usúario do seu servidor"
+PASSWORD="Senha do seu servidor"
+HOST_EMAIL=Provedor de E-mail
+SERVICE =gmail // - Exemplo
+USER_EMAIL="Seu e-mail"
+PASSWORD_EMAIL="Sua senha de e-mail"
+DATABASE_PORT=Porta do seu banco de dados
+HOST_PORT=Porta do seu servidor - Exemplo"(4000)"
+PORT=8080
+SALT=Numero de Vezes para criptografia
+JWT_KEY="Chave do JWT"
+JWT_EXPIRES="1d"
+DATABASE_NAME="Nome do seu banco de dados a utilizar"
+SSL_CA_PATH="./ca.crt" - certificado ssl
