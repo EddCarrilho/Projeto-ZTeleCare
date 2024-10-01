@@ -12,7 +12,7 @@ Site  de Apoio Psicológico: Um app que oferece suporte emocional e psicológico
  
 ## Deploy
  
-Para fazer o deploy desse projeto rode
+Para fazer o deploy desse projeto node
  
 ```bash
   npm start 
