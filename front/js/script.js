@@ -89,9 +89,9 @@ function Login(event){
                     "content-type":"application/json"
                 },
                 body:JSON.stringify({
-                    email:email2.value,
+                    email:email2,
                     cpf:cleanCpf2,
-                    senha:senha2.value
+                    senha:senha2
                 })
             }).then((res)=> {
                 if (res.status === 400) {
